@@ -1,13 +1,32 @@
 {{/* Site-specific CSS overrides.
      Files in this folder are executed as templates and injected at the end of
      <head> on every page. Only put .html files here — any other file (a
-     .gitkeep, a README) is also executed and will crash the build. */}}
+     .gitkeep, a README) is also executed as a template and crashes the build. */}}
 <style>
-  /* University emblems on the homepage education cards.
-     The theme renders these at 24px inside a 48px circle, which is too small
-     for a detailed university seal to read. Selector matches the emblem
-     circles specifically (bg-white + ring-1), not the section-heading icons
-     (which use bg-primary-100). */
+  /* ── Hero background ───────────────────────────────────────────────────
+     The theme paints the hero as one flat colour. These soft radial washes
+     give it depth without a background image. They are built from the theme's
+     own colour variables, so changing theme.colors.primary in params.yaml
+     restyles this automatically. Raise the alpha values for more colour,
+     lower them (or delete the rule) for a flat background. */
+  .resume-biography {
+    background-image:
+      radial-gradient(58% 78% at 10% 12%, rgb(var(--hb-primary-500-rgb) / 0.14) 0%, transparent 62%),
+      radial-gradient(52% 72% at 90% 8%,  rgb(var(--hb-secondary-500-rgb) / 0.13) 0%, transparent 64%),
+      radial-gradient(68% 62% at 72% 98%, rgb(var(--hb-primary-400-rgb) / 0.10) 0%, transparent 66%),
+      radial-gradient(48% 60% at 30% 92%, rgb(var(--hb-secondary-400-rgb) / 0.08) 0%, transparent 68%);
+  }
+  :where(.dark) .resume-biography {
+    background-image:
+      radial-gradient(58% 78% at 10% 12%, rgb(var(--hb-primary-500-rgb) / 0.26) 0%, transparent 62%),
+      radial-gradient(52% 72% at 90% 8%,  rgb(var(--hb-secondary-500-rgb) / 0.22) 0%, transparent 64%),
+      radial-gradient(68% 62% at 72% 98%, rgb(var(--hb-primary-400-rgb) / 0.16) 0%, transparent 66%);
+  }
+
+  /* ── University emblems on the education cards ─────────────────────────
+     The theme renders these at 24px inside a 48px circle — too small for a
+     detailed seal to read. Matches the emblem circles (bg-white + ring-1)
+     only, not the section-heading icons (bg-primary-100). */
   .flex-shrink-0.w-12.h-12.bg-white.ring-1.rounded-full {
     width: 4rem;
     height: 4rem;
