@@ -147,7 +147,7 @@ sections:
       prospective:
         title: 'Seeking postdoctoral positions'
         text: |-
-          I expect to defend in December 2026 and am looking for postdoc
-          positions starting in 2027, in TOPIC AREA. Happy to share my
+          I expect to defend in June 2027 and am looking for postdoc
+          positions starting in late 2027, in TOPIC AREA. Happy to share my
           research statement and references on request.
 ---

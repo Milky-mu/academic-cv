@@ -52,8 +52,8 @@ bio: |
   line — but a deliberate framing of an interdisciplinary path reads as a
   strength, whereas leaving it unexplained invites the question.)
 
-  **I expect to defend in December 2026 and am seeking postdoctoral
-  positions starting in 2027.** If my work overlaps with your group's,
+  **I expect to defend in June 2027 and am seeking postdoctoral
+  positions starting in late 2027.** If my work overlaps with your group's,
   I'd be glad to hear from you — my CV is linked above.
 
 # ── Links shown as icons under your bio ────────────────────────────────────
@@ -100,7 +100,7 @@ interests:
 education:
   - degree: PhD in Chemistry
     institution: Tsinghua University
-    year: "Sep 2023 – Dec 2026 (expected)"
+    year: "Sep 2023 – Jun 2027 (expected)"
     start: 2023-09-01
     # end: omitted on purpose — renders as "Present" until you defend
     icon: custom/tsinghua
