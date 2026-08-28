@@ -67,3 +67,7 @@ Desktop.ini
 
 *.log
 npm-debug.log*
+
+# Local build artifacts (project uses pnpm; upstream ships no go.sum)
+go.sum
+package-lock.json
