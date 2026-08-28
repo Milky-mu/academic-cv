@@ -32,14 +32,16 @@ hugoblox:
   # Color and visual design system
   # ────────────────────────────────────────────────────────────────────────────
   theme:
-    # Mode: 'light', 'dark', or 'system' (follows OS preference)
-    mode: system
+    # Mode: 'light', 'dark', or 'system' (follows OS preference).
+    # Pinned to 'light' — under 'system', visitors on a dark-mode OS got the
+    # pack's dark navy (#0f172a) page background.
+    mode: light
     # Theme pack: name from data/themes/ or { light: "x", dark: "y" } for mix-and-match
     pack: "default"
     # Optional: Override theme pack colors
     colors:
-      primary: "" # Tailwind palette name or hex (e.g., "indigo" or "#6366f1")
-      secondary: ""
+      primary: "#660874" # Tsinghua purple, matching the emblem
+      secondary: "teal"
       neutral: "" # Affects gray utilities (text-gray-*, bg-gray-*)
     # Optional: Mode-specific color overrides
     colors_light: {}
