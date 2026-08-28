@@ -1,116 +1,175 @@
+# ═══════════════════════════════════════════════════════════════════════════
+#  YOUR PROFILE — this one file drives your homepage bio, the education and
+#  experience timelines, your social links, skills, languages, and awards.
+#  Start here. Anything you leave blank or delete simply won't render.
+# ═══════════════════════════════════════════════════════════════════════════
 schema: hugoblox/author/v1
 slug: me
 is_owner: true
+
 name:
-  display: Dr. Alex Johnson
-  given: Alex
-  family: Johnson
-  alternate: ''  # Example: 王伟
-  pronunciation: ''  # Example: Wáng Wěi
-  pronouns: he/him
-postnominals:
-  - PhD
-  - MIEEE
+  display: Ouyang Muzi        # Shown as the big heading on the homepage
+  given: Muzi
+  family: Ouyang
+  alternate: ''               # Name in another script, e.g. 林彦青
+  pronunciation: ''           # e.g. Lín Yànqīng
+  pronouns: ''                # e.g. she/her — leave empty to hide
+
+# Letters after your name. You don't have the PhD yet, so this stays empty
+# for now — uncomment it the day you defend.
+postnominals: []
+# postnominals:
+#   - PhD
+
+# A small emoji badge on your avatar. "" hides it.
+# 🔍 reads as "looking" — a quiet signal while you're on the job market.
 status:
-  icon: "☕️"
-role: Senior AI Research Scientist
-bio: |
-  Alex Johnson is a Senior AI Research Scientist at Meta AI. His research
-  has been published in top conferences like NeurIPS and ICML, with over
-  10,000 citations. Alex is passionate about pushing the boundaries of AI
-  while ensuring ethical development.
+  icon: "🔍"
 
+# Your current title — appears directly under your name.
+role: PhD Candidate
+
+# ── AFFILIATION ───────────────────────────────────────────────────────────
+# The institution you belong to *right now*, shown in grey under your role.
+# Not your research topic and not your job title — just where you are.
+# Convention is "Department, University" and a link to the department page.
+# List more than one only if you genuinely hold two posts (e.g. a joint
+# appointment or an affiliated institute).
 affiliations:
-  - name: Meta AI
-    url: https://ai.meta.com/
+  - name: Department of Chemistry, Tsinghua University
+    url: https://www.chem.tsinghua.edu.cn/
 
+# ── BIO ───────────────────────────────────────────────────────────────────
+# 2-4 sentences. On the job market, say what you work on AND that you're
+# looking — search committees and prospective PIs read this first.
+bio: |
+  I am a PhD candidate in Chemistry at Tsinghua University, advised by
+  Prof. ADVISOR NAME. My research is on YOUR TOPIC — ONE SENTENCE ON WHAT
+  YOU FOUND OR BUILT.
+
+  My background spans animal science, basic medicine and chemistry, so I
+  work comfortably at the interface between them. (Rewrite or delete this
+  line — but a deliberate framing of an interdisciplinary path reads as a
+  strength, whereas leaving it unexplained invites the question.)
+
+  **I expect to defend in December 2026 and am seeking postdoctoral
+  positions starting in 2027.** If my work overlaps with your group's,
+  I'd be glad to hear from you — my CV is linked above.
+
+# ── Links shown as icons under your bio ────────────────────────────────────
+# Delete any line you don't use. Icon names come from the Hugo Blox icon set:
+#   at-symbol, phone, brands/x, brands/github, brands/linkedin, brands/bluesky,
+#   brands/mastodon, brands/youtube, academicons/google-scholar,
+#   academicons/orcid, academicons/arxiv, academicons/researchgate
 links:
   - icon: at-symbol
-    url: mailto:alex.johnson@example.com
+    url: mailto:mumumia.1009@gmail.com
     label: E-mail Me
-  - icon: brands/x
-    url: https://x.com/example
-  - icon: brands/github
-    url: https://github.com/example
-  - icon: brands/linkedin
-    url: https://www.linkedin.com/in/example/
   - icon: academicons/google-scholar
-    url: https://scholar.google.com/citations?user=example
+    url: https://scholar.google.com/citations?user=YOUR_SCHOLAR_ID
   - icon: academicons/orcid
-    url: https://orcid.org/0000-0002-1825-0097
+    url: https://orcid.org/0000-0000-0000-0000
+  - icon: brands/github
+    url: https://github.com/Milky-mu
+  - icon: brands/linkedin
+    url: https://www.linkedin.com/in/muzi-ouyang/
 
+# ── Research interests — a simple bulleted list on the homepage ────────────
 interests:
-  - Large Language Models
-  - Computer Vision
-  - Reinforcement Learning
-  - AI Ethics
+  - First research interest
+  - Second research interest
+  - Third research interest
 
+# ── EDUCATION ─────────────────────────────────────────────────────────────
+# Newest first. Rendered as cards on the homepage and as a timeline on
+# /experience/.
+#
+# `icon:` puts a university emblem in the circle, LinkedIn-style. To use one:
+#   1. Save the university's logo as SVG in `assets/media/icons/custom/`
+#      e.g. assets/media/icons/custom/tsinghua.svg
+#   2. Reference it here as `icon: custom/tsinghua`
+# See `assets/media/icons/custom/README.md` for details and caveats.
+# Omit `icon:` and you get the default graduation-cap.
+#
+# IMPORTANT: a `custom/...` icon whose SVG is missing renders the Hugo logo,
+# not the fallback cap. Add the file first, then uncomment the line.
+#
+# Dates: use `year:` for a free-text line on the card ("2022 – present").
+# Also keep `start:`/`end:` — the /experience/ timeline uses those, and
+# omitting `end` makes it show "Present".
 education:
-  - degree: PhD Computer Science
-    institution: Stanford University
-    start: 2015-09-01
-    end: 2019-06-30
+  - degree: PhD in Chemistry
+    institution: Tsinghua University
+    year: "Sep 2023 – Dec 2026 (expected)"
+    start: 2023-09-01
+    # end: omitted on purpose — renders as "Present" until you defend
+    icon: custom/tsinghua
     summary: |
-      Thesis on scaling laws for neural language models. Published 5 papers in NeurIPS and ICML.
-    button:
-      text: Download dissertation
-      url: /resume.pdf
-      icon: hero/arrow-down-tray
-  - degree: MS Computer Science
-    institution: Carnegie Mellon University
-    start: 2013-09-01
-    end: 2015-05-31
-  - degree: BS Computer Science
-    institution: MIT
-    start: 2009-09-01
-    end: 2013-05-31
+      Thesis: *YOUR THESIS TITLE*. Advised by Prof. ADVISOR NAME.
+  - degree: Master's Degree in Basic Medicine
+    institution: Sun Yat-sen University
+    year: "Sep 2020 – Jul 2023"
+    start: 2020-09-01
+    end: 2023-07-31
+    icon: custom/sun-yat-sen
+  - degree: Bachelor's Degree in Animal Sciences
+    institution: Northwest A&F University
+    year: "Sep 2016 – Jul 2020"
+    start: 2016-09-01
+    end: 2020-07-31
+    icon: custom/northwest-af
 
+# ── EXPERIENCE ────────────────────────────────────────────────────────────
+# Newest first. Omit `end` for anything ongoing. `icon:` works here too.
+# As a PhD student, this is where research assistantships, teaching posts,
+# internships, and visiting positions go.
 experience:
-  - role: Senior AI Research Scientist
-    org: Meta AI
-    start: 2020-01-01
+  - role: Doctoral Researcher
+    org: Department of Chemistry, Tsinghua University
+    start: 2023-09-01
+    icon: custom/tsinghua
     summary: |
-      Leading research on multimodal AI systems. Contributed to Llama 2 and other open-source models.
-    button:
-      text: View portfolio
-      url: /
-      icon: hero/arrow-down-tray
-  - role: AI Research Intern
-    org: OpenAI
-    start: 2019-06-01
-    end: 2019-12-31
+      What you actually do: the methods you run, the systems you built, the
+      results you got. Two or three sentences beats a bullet list here.
+  - role: Research Intern
+    org: Company or Institute
+    start: 2024-06-01
+    end: 2024-09-30
     summary: |
-      Worked on GPT-3 scaling. Co-authored paper on prompt engineering.
+      What the internship covered and what came out of it.
+  - role: Teaching Assistant
+    org: Your Department
+    start: 2023-01-01
+    end: 2023-06-30
+    summary: |
+      Course name and level, and what you were responsible for.
 
+# ── Skills — shown on /experience/. `level` is 1-5. ───────────────────────
 skills:
-  - name: Technical Skills
+  - name: Technical
     items:
       - label: Python
         level: 5
-      - label: Machine Learning
-        level: 5
-      - label: Cloud Computing
+      - label: Add your own
         level: 4
-  - name: Research & Communication
+  - name: Research
     items:
       - label: Academic Writing
-        level: 5
-      - label: Conference Presentations
         level: 4
-      - label: Grant Proposals
+      - label: Experimental Design
         level: 4
 
 languages:
   - name: English
-    level: 5
-    label: Native
-  - name: Spanish
     level: 4
     label: Fluent
 
+# ── Awards, honours, fellowships, scholarships ────────────────────────────
+# On the postdoc market these carry real weight — list scholarships and
+# travel grants too, not just paper awards. Delete the block if empty.
 awards:
-  - title: Best Paper Award
-    awarder: NeurIPS
-    date: "2022-12-01"
-    summary: Awarded for groundbreaking work on efficient training of large models.
+  - title: Your Scholarship, Fellowship or Award
+    awarder: Awarding Body
+    date: "2024-01-01"
+    summary: One line on what it was for.
     icon: hero/trophy

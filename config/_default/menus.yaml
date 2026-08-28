@@ -1,7 +1,8 @@
-# Navigation Links
-#   To link a homepage widget, specify the URL as a hash `#` followed by the filename of the
-  #     desired widget in your `content/home/` folder.
-  #   The weight parameter defines the order that the links will appear in.
+# Navigation bar links.
+#   `weight` sets the order (low numbers first).
+#   A URL starting with `/#` jumps to a section `id:` on the homepage —
+#   these must match the `id:` values in `content/_index.md`.
+#   Delete any item you don't want; 6-8 links is a comfortable maximum.
 
 main:
   - name: Bio
@@ -9,19 +10,22 @@ main:
     weight: 10
   - name: Papers
     url: /#papers
-    weight: 11
+    weight: 20
   - name: Talks
     url: /#talks
-    weight: 12
+    weight: 30
   - name: News
     url: /#news
-    weight: 13
+    weight: 40
   - name: Experience
     url: experience/
-    weight: 20
+    weight: 50
   - name: Projects
     url: projects/
-    weight: 30
-  - name: Courses
-    url: courses/
-    weight: 40
+    weight: 60
+  - name: Teaching
+    url: teaching/
+    weight: 70
+  - name: Contact
+    url: /#contact
+    weight: 80

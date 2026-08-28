@@ -1,54 +1,70 @@
 ---
-# Leave the homepage title empty to use the site title
+# ═══════════════════════════════════════════════════════════════════════════
+#  YOUR HOMEPAGE
+#  The page is built from the `sections:` list below, top to bottom.
+#  Reorder them by moving blocks around; hide one by deleting it.
+#  Each `id:` is what the nav bar's `/#id` links point at — if you change an
+#  id here, change it in `config/_default/menus.yaml` too.
+#  Most of the *text* on this page lives in `data/authors/me.yaml`.
+# ═══════════════════════════════════════════════════════════════════════════
 title: ''
 summary: ''
-date: 2022-10-24
+date: 2026-08-28
 type: landing
 
 sections:
+  # ── 1. Bio ───────────────────────────────────────────────────────────────
+  # Two columns: photo, name, role, affiliation and social icons on the left;
+  # "Professional Summary", CV button and the Education cards on the right.
+  # All of it comes from `data/authors/me.yaml`. Swap the photo by replacing
+  # `assets/media/authors/me.png` with your own (square, 640x640 or larger).
   - block: resume-biography-3
     content:
-      # Choose a user profile to display (a folder name within `content/authors/`)
       username: me
       text: ''
-      # Show a call-to-action button under your biography? (optional)
+      # Replace `static/uploads/resume.pdf` with your own CV, or delete this
+      # `button` block if you'd rather not offer a download.
       button:
         text: Download CV
         url: uploads/resume.pdf
+      # Leave blank for the defaults ("Professional Summary", "Education").
       headings:
         about: ''
         education: ''
         interests: ''
     design:
-      # Use the new Gradient Mesh which automatically adapts to the selected theme colors
       background:
         gradient_mesh:
           enable: true
-
-      # Name heading sizing to accommodate long or short names
       name:
-        size: md # Options: xs, sm, md, lg (default), xl
-
-      # Avatar customization
+        size: md # xs, sm, md, lg, xl
       avatar:
-        size: medium # Options: small (150px), medium (200px, default), large (320px), xl (400px), xxl (500px)
-        shape: circle # Options: circle (default), square, rounded
+        size: medium # small, medium, large, xl, xxl
+        shape: circle # circle, square, rounded
+
+  # ── 2. Research ──────────────────────────────────────────────────────────
   - block: markdown
+    id: research
     content:
-      title: '📚 My Research'
+      title: '📚 Research'
       subtitle: ''
       text: |-
-        Use this area to speak to your mission. I'm a research scientist in the Moonshot team at DeepMind. I blog about machine learning, deep learning, and moonshots.
+        Replace this with a paragraph or two about your research programme —
+        the question you're chasing, the methods you use, and why it matters.
 
-        I apply a range of qualitative and quantitative methods to comprehensively investigate the role of science and technology in the economy.
-
-        Please reach out to collaborate 😃
+        A good structure: what the field gets wrong or leaves open, what you
+        do about it, and where you want to take it next. That last part
+        matters most on the postdoc market — a PI wants to see the research
+        programme you'd bring to their group, not just what you've finished.
     design:
       columns: '1'
+
+  # ── 3. Selected publications ─────────────────────────────────────────────
+  # Shows only papers with `featured: true` in their front matter.
   - block: collection
     id: papers
     content:
-      title: Featured Publications
+      title: Selected Publications
       filters:
         folders:
           - publications
@@ -56,9 +72,12 @@ sections:
     design:
       view: article-grid
       columns: 2
+
+  # ── 4. All publications, as formatted citations ──────────────────────────
   - block: collection
+    id: publications
     content:
-      title: Recent Publications
+      title: All Publications
       text: ''
       filters:
         folders:
@@ -66,62 +85,69 @@ sections:
         exclude_featured: false
     design:
       view: citation
+
+  # ── 5. Talks ─────────────────────────────────────────────────────────────
   - block: collection
     id: talks
     content:
-      title: Recent & Upcoming Talks
+      title: Talks & Presentations
       filters:
         folders:
           - events
     design:
       view: card
+
+  # ── 6. News ──────────────────────────────────────────────────────────────
   - block: collection
     id: news
     content:
-      title: Recent News
+      title: News
       subtitle: ''
       text: ''
-      # Page type to display. E.g. post, talk, publication...
-      page_type: blog
-      # Choose how many pages you would like to display (0 = all pages)
-      count: 10
-      # Filter on criteria
+      count: 5
       filters:
-        author: ''
-        category: ''
-        tag: ''
-        exclude_featured: false
-        exclude_future: false
-        exclude_past: false
-        publication_type: ''
-      # Choose how many pages you would like to offset by
-      offset: 0
-      # Page order: descending (desc) or ascending (asc) date.
+        folders:
+          - news
       order: desc
     design:
-      # Choose a layout view
       view: card
-      # Reduce spacing
       spacing:
         padding: [0, 0, 0, 0]
-  - block: cta-card
-    demo: true # Only display this section in the HugoBlox Kit demo site
+
+  # ── 7. Contact ───────────────────────────────────────────────────────────
+  # Social icons are pulled from `links:` in `data/authors/me.yaml`.
+  # Delete any field below that you'd rather not publish.
+  - block: contact-info
+    id: contact
     content:
-      title: 👉 Build your own academic website like this
+      title: Contact
+      subtitle: ''
       text: |-
-        This site is generated by HugoBlox Kit - the FREE, Hugo-based open source website builder trusted by 250,000+ academics like you.
-
-        <a class="github-button" href="https://github.com/HugoBlox/kit" data-color-scheme="no-preference: light; light: light; dark: dark;" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star HugoBlox/kit on GitHub">Star</a>
-
-        Easily build anything with blocks - no-code required!
-
-        From landing pages, second brains, and courses to academic resumés, conferences, and tech blogs.
-      button:
-        text: Get Started
-        url: https://hugoblox.com/templates/
-    design:
-      card:
-        # Card background color (CSS class)
-        css_class: 'bg-gradient-to-br from-primary-500 via-primary-600 to-secondary-600 text-white shadow-2xl'
-        css_style: ''
+        The best way to reach me is by email. I'm happy to hear about
+        collaborations, seminar invitations, and student enquiries.
+      email: mumumia.1009@gmail.com
+      phone: ''
+      visit_title: 'Find Me'
+      address:
+        lines:
+          - Your Department
+          - Your University
+          - Street Address
+          - City, Postcode, Country
+      office_hours:
+        - 'By appointment — email me'
+      # Optional: paste a Google Maps share link
+      map_url: ''
+      # Set true only if you have configured a form backend in `form_action`
+      show_form: false
+      form_action: ''
+      # Call-out box. While you're on the job market, use it to say so
+      # plainly — it's the first thing a hiring PI looks for.
+      # Delete this whole block once you've landed a position.
+      prospective:
+        title: 'Seeking postdoctoral positions'
+        text: |-
+          I expect to defend in December 2026 and am looking for postdoc
+          positions starting in 2027, in TOPIC AREA. Happy to share my
+          research statement and references on request.
 ---

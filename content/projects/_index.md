@@ -1,14 +1,13 @@
 ---
 title: 'Projects'
-date: 2024-05-19
+date: 2026-08-28
 type: landing
 
-# Page sections
 sections:
   - block: collection
     content:
-      title: Selected Projects
-      text: I enjoy making things. Here are a selection of projects that I have worked on over the years.
+      title: Projects
+      text: Software, datasets, and other things I've built. Replace this line with your own.
       filters:
         folders:
           - projects

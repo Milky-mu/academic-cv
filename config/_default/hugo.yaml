@@ -5,8 +5,12 @@
 
 # Website name (set in params.yaml under hugoblox.branding.name)
 title: ''
-# Website URL
-baseURL: 'https://example.com/'
+# Website URL — must match where the site is actually served, including the
+# trailing slash, or CSS and links will 404.
+#   GitHub Pages project site:  https://<user>.github.io/<repo>/
+#   GitHub Pages user site:     https://<user>.github.io/
+#   Custom domain:              https://yourdomain.com/
+baseURL: 'https://milky-mu.github.io/academic-cv/'
 
 ############################
 ## LANGUAGE
