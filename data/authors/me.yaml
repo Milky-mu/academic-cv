@@ -64,9 +64,12 @@ bio: |
 links:
   - icon: at-symbol
     url: mailto:mumumia.1009@gmail.com
-    label: E-mail Me
+    label: E-mail (Gmail)
+  - icon: at-symbol
+    url: mailto:oymzmia@163.com
+    label: E-mail (163)
   - icon: academicons/google-scholar
-    url: https://scholar.google.com/citations?user=YOUR_SCHOLAR_ID
+    url: https://scholar.google.com/citations?user=qAezGtwAAAAJ
   - icon: academicons/orcid
     url: https://orcid.org/0000-0000-0000-0000
   - icon: brands/github
