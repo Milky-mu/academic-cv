@@ -1,13 +1,22 @@
 /* ---------------------------------------------------------------------------
    Pinyin tone marks in the name ruby annotation.
 
-   Unicode treats "i" as soft-dotted: when a caron is stacked on it (U+01D0 ǐ,
-   the third-tone i), the tittle must disappear. The heading font, Lora, draws
-   the dot AND the caron, which renders Mùzǐ incorrectly.
+   The Latin webfonts here have no mark-positioning anchors for a caron over
+   "i", so browsers decompose U+01D0 (ǐ) into i + U+030C and park the caron
+   beside the tittle instead of replacing it — "Mùzǐ" comes out visibly wrong.
 
-   Source Serif 4 handles the composition properly and is already loaded by the
-   theme as the body font, so this costs no extra request.
+   Fonts shipped for Chinese typesetting are built for pinyin and compose the
+   third tone correctly, so the annotation asks for those first and falls back
+   through the platform CJK faces (Windows, macOS, Linux) before any Latin one.
    --------------------------------------------------------------------------- */
 .hb-ruby-name rt {
-  font-family: 'Source Serif 4', ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+  font-family:
+    'Microsoft YaHei',      /* Windows */
+    'PingFang SC',          /* macOS */
+    'Hiragino Sans GB',     /* older macOS */
+    'Noto Sans CJK SC',     /* Linux */
+    'Noto Sans SC',
+    'Source Han Sans SC',
+    system-ui,
+    sans-serif;
 }
