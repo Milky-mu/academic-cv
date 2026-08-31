@@ -8,11 +8,11 @@ slug: me
 is_owner: true
 
 name:
-  display: Ouyang Muzi        # Shown as the big heading on the homepage
+  display: Muzi (Mia) Ouyang  # Shown as the big heading on the homepage
   given: Muzi
   family: Ouyang
-  alternate: ''               # Name in another script, e.g. 林彦青
-  pronunciation: ''           # e.g. Lín Yànqīng
+  alternate: 欧阳木子           # Name in another script
+  pronunciation: Ōuyáng Mùzǐ  # Tones mark the compound surname 欧阳
   pronouns: ''                # e.g. she/her — leave empty to hide
 
 # Letters after your name. You don't have the PhD yet, so this stays empty
