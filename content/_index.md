@@ -120,10 +120,14 @@ sections:
       title: Contact
       subtitle: ''
       text: |-
-        The best way to reach me is by email. I also keep a 163 address —
-        oymzmia@163.com — which is more reliable for correspondence from
-        within China. I'm happy to hear about collaborations, seminar
-        invitations, and student enquiries.
+        The best way to reach me is by email, at either address:
+
+        - **mumumia.1009@gmail.com**
+        - **oymzmia@163.com** — more reliable for correspondence from
+          within China
+
+        I'm happy to hear about collaborations, seminar invitations, and
+        student enquiries.
       email: mumumia.1009@gmail.com
       phone: ''
       visit_title: 'Find Me'
