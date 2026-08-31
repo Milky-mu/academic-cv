@@ -8,7 +8,7 @@ slug: me
 is_owner: true
 
 name:
-  display: Muzi Ouyang (Mia)  # Shown as the big heading on the homepage
+  display: Muzi Ouyang        # Shown as the big heading on the homepage
   given: Muzi
   family: Ouyang
   alternate: 欧阳木子           # Name in another script
@@ -43,7 +43,7 @@ affiliations:
 # 2-4 sentences. On the job market, say what you work on AND that you're
 # looking — search committees and prospective PIs read this first.
 bio: |
-  I am Muzi Ouyang (欧阳木子), and I go by Mia. I am a PhD candidate in
+  I am Muzi Ouyang (欧阳木子) — I go by **Mia**. I am a PhD candidate in
   Chemistry at Tsinghua University, advised by Prof. ADVISOR NAME. My
   research is on YOUR TOPIC — ONE SENTENCE ON WHAT YOU FOUND OR BUILT.
 
@@ -54,7 +54,9 @@ bio: |
 
   **I expect to defend in June 2027 and am seeking postdoctoral
   positions starting in late 2027.** If my work overlaps with your group's,
-  I'd be glad to hear from you — my CV is linked above.
+  I'd be glad to hear from you — my CV is linked above. Write to me at
+  mumumia.1009@gmail.com, or oymzmia@163.com if you are corresponding
+  from within China.
 
 # ── Links shown as icons under your bio ────────────────────────────────────
 # Delete any line you don't use. Icon names come from the Hugo Blox icon set:
