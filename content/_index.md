@@ -120,15 +120,12 @@ sections:
       title: Contact
       subtitle: ''
       text: |-
-        The best way to reach me is by email, at either address:
-
-        - **mumumia.1009@gmail.com**
-        - **oymzmia@163.com** — more reliable for correspondence from
-          within China
-
-        I'm happy to hear about collaborations, seminar invitations, and
-        student enquiries.
-      email: mumumia.1009@gmail.com
+        The best way to reach me is by email. I'm happy to hear about
+        collaborations, seminar invitations, and student enquiries.
+      # Either a single address or a list; each one renders as its own entry.
+      email:
+        - mumumia.1009@gmail.com
+        - oymzmia@163.com
       phone: ''
       visit_title: 'Find Me'
       address:
