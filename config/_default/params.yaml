@@ -41,7 +41,7 @@ hugoblox:
     # Optional: Override theme pack colors
     colors:
       primary: "#660874" # Tsinghua purple, matching the emblem
-      secondary: "teal"
+      secondary: "#14b8a6"
       neutral: "" # Affects gray utilities (text-gray-*, bg-gray-*)
     # Optional: Mode-specific color overrides
     colors_light: {}
