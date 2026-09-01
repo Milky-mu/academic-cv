@@ -20,3 +20,26 @@
     system-ui,
     sans-serif;
 }
+
+/* ---------------------------------------------------------------------------
+   Reading width on article pages (a paper, a news item, a project).
+
+   These pages give their main column max-w-6xl (1152px), but the text inside
+   sits in a `prose` wrapper capped at 65 characters — roughly 700px at this
+   font size. The column is nearly twice as wide as the text it holds, so an
+   abstract ends up as a narrow ribbon down the middle of an empty page.
+
+   Opening the measure to 80 characters uses that column properly while
+   staying inside the range that stays comfortable to read; past about 80,
+   the eye starts losing its place tracking back to the next line.
+
+   Scoped to `article main` so it only affects these single pages. The
+   homepage and the listing pages keep the widths the theme gave them.
+
+   To tune: 65ch is the theme's default, 80ch is set here, 90ch is about as
+   far as it can go before lines feel long.
+   --------------------------------------------------------------------------- */
+.page-body article main .prose,
+.page-body article main .max-w-prose {
+  max-width: 80ch;
+}
