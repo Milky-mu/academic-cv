@@ -84,15 +84,18 @@ This site is served from the custom domain **muziouyang.com**, set under
 Actions rather than a branch, no `static/CNAME` file is needed — GitHub ignores
 one if present. The domain lives only in the repo settings.
 
-`baseURL` in `config/_default/hugo.yaml` must match the address the site is
-actually served from:
+**The deploy ignores `baseURL` in `config/_default/hugo.yaml`.**
+`.github/workflows/build.yml` builds with
+`--baseURL "${{ steps.pages.outputs.base_url }}/"`, and that value comes from
+`actions/configure-pages`, which reads the domain out of *Settings → Pages*.
+So the repo setting wins, and editing the config file will not change the
+deployed site. Keep the config value correct anyway — `hugo server` uses it
+locally, and it would apply again if the deploy ever moved off Actions.
 
-- Custom domain: `https://muziouyang.com/`
-- Project site (no custom domain): `https://milky-mu.github.io/academic-cv/`
-- User site (repo renamed to `Milky-mu.github.io`): `https://milky-mu.github.io/`
-
-The trailing slash matters. A wrong `baseURL` builds fine but serves a site with
-broken CSS and links.
+One consequence: `configure-pages` reports the site as `http://` until
+**Enforce HTTPS** is enabled in *Settings → Pages*. Turn that on, then rerun the
+deploy, or absolute URLs in the page metadata (`og:url`, canonical) keep the
+`http://` scheme even though visitors are redirected to HTTPS.
 
 ### DNS records
 
