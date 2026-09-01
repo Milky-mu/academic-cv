@@ -79,15 +79,39 @@ and deploys it to GitHub Pages.
 **One-time setup:** on GitHub, go to *Settings → Pages* and set **Source** to
 **GitHub Actions**.
 
-Then set `baseURL` in `config/_default/hugo.yaml` to match:
+This site is served from the custom domain **muziouyang.com**, set under
+*Settings → Pages → Custom domain*. Because the deploy goes through GitHub
+Actions rather than a branch, no `static/CNAME` file is needed — GitHub ignores
+one if present. The domain lives only in the repo settings.
 
-- Project site (this repo, `academic-cv`): `https://milky-mu.github.io/academic-cv/`
-- User site (rename repo to `Milky-mu.github.io`): `https://milky-mu.github.io/`
-- Custom domain: `https://yourdomain.com/` — also add a `static/CNAME` file
-  containing just the domain
+`baseURL` in `config/_default/hugo.yaml` must match the address the site is
+actually served from:
+
+- Custom domain: `https://muziouyang.com/`
+- Project site (no custom domain): `https://milky-mu.github.io/academic-cv/`
+- User site (repo renamed to `Milky-mu.github.io`): `https://milky-mu.github.io/`
 
 The trailing slash matters. A wrong `baseURL` builds fine but serves a site with
 broken CSS and links.
+
+### DNS records
+
+At the registrar, for the apex domain:
+
+| Type | Name | Value |
+| --- | --- | --- |
+| A | `@` | `185.199.108.153` |
+| A | `@` | `185.199.109.153` |
+| A | `@` | `185.199.110.153` |
+| A | `@` | `185.199.111.153` |
+| AAAA | `@` | `2606:50c0:8000::153` |
+| AAAA | `@` | `2606:50c0:8001::153` |
+| AAAA | `@` | `2606:50c0:8002::153` |
+| AAAA | `@` | `2606:50c0:8003::153` |
+| CNAME | `www` | `milky-mu.github.io.` |
+
+The `www` CNAME lets GitHub redirect `www.muziouyang.com` to the apex. Once DNS
+resolves, tick **Enforce HTTPS** in *Settings → Pages*.
 
 ---
 
