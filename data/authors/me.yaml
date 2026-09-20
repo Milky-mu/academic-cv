@@ -198,25 +198,25 @@ experience:
 # NOTE: the `level` numbers are a first pass — adjust them to your own
 # sense of where you stand. They drive the length of the bars only.
 skills:
-  - name: Computational Protein Design
+  - name: Computational protein design
     items:
       - label: Rosetta / PyRosetta
       - label: ProteinMPNN
       - label: AlphaFold2 / ColabFold
-  - name: Molecular Dynamics & Modelling
+  - name: Molecular dynamics and modelling
     items:
       - label: GROMACS
       - label: AMBER / AmberTools
       - label: CHARMM-GUI
-      - label: Force-field parameterization
-  - name: Wet Lab
+      - label: Force-field parameterisation
+  - name: Wet lab
     items:
       - label: Mammalian cell culture
       - label: Western blot
       - label: Flow cytometry
       - label: Co-immunoprecipitation
       - label: Plasmid construction & transfection
-  - name: Data & Computing
+  - name: Data and computing
     items:
       - label: Python scientific computing
       - label: Linux / cloud GPU orchestration
