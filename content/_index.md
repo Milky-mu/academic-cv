@@ -130,10 +130,11 @@ sections:
       visit_title: 'Find Me'
       address:
         lines:
-          - Your Department
-          - Your University
-          - Street Address
-          - City, Postcode, Country
+          - Institute of Biopharmaceutical and Health Engineering (iBHE)
+          - Tsinghua Shenzhen International Graduate School
+          - Tsinghua Campus, Xili University Town
+          - Nanshan District, Shenzhen, Guangdong 518055
+          - China
       office_hours:
         - 'By appointment — email me'
       # Optional: paste a Google Maps share link
