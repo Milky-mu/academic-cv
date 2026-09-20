@@ -4,7 +4,7 @@ date: 2026-09-01
 
 links:
   - type: code
-    url: https://github.com/Milky-mu
+    url: https://github.com/Milky-mu/CLAIRE
 
 tags:
   - Protein Design
@@ -36,9 +36,10 @@ targets I care about, generality is the whole question.
 
 ## De novo binder design
 
-I reproduced the **CLAIRE** small-molecule binder-design pipeline end-to-end —
+I reproduced the **CLAIRE** pipeline — Combinatorial Assembly with Integrated
+REfinement, for de novo design of small-molecule binding proteins — end-to-end:
 Rosetta motif generation and matching, sequence design with ProteinMPNN, and
-AlphaFold2 self-consistency validation — building the full Rosetta / PyRosetta /
+AlphaFold2 self-consistency validation, building the full Rosetta / PyRosetta /
 ColabFold environment from scratch.
 
 Rather than stopping at the repository's built-in example (progesterone), I ran
@@ -47,7 +48,8 @@ configurations are chemically distinct enough to probe generalization instead of
 repeating a result. All three yielded AlphaFold2-self-consistent candidates, the
 best at **pLDDT 94.1, 0.62 Å RMSD**. I also diagnosed and fixed a latent
 file-naming defect in the original codebase, and published the reproduction
-openly — including the debugging narrative, which is usually the part omitted.
+openly at [github.com/Milky-mu/CLAIRE](https://github.com/Milky-mu/CLAIRE) —
+including the debugging narrative, which is usually the part omitted.
 
 ## Testing whether a design method generalizes
 
