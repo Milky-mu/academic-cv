@@ -4,7 +4,7 @@
 #  The folder name becomes the URL. Add `featured.png` for a thumbnail.
 # ═══════════════════════════════════════════════════════════════════════════
 title: Your Project Name
-date: 2026-08-28
+date: 2020-01-01
 
 # Buttons shown on the project card. Types: site, code, pdf, dataset, video, project
 links:

@@ -46,13 +46,39 @@ sections:
       title: '📚 Research'
       subtitle: ''
       text: |-
-        Replace this with a paragraph or two about your research programme —
-        the question you're chasing, the methods you use, and why it matters.
+        Targeted protein degradation can reach proteins that conventional
+        inhibitors cannot, because it only has to *bind* a target, not
+        occupy a functional pocket. I build **bioPROTACs** — genetically
+        encoded degraders that fuse a target-binding domain to an E3
+        ligase — and ask what happens when they stop working.
 
-        A good structure: what the field gets wrong or leaves open, what you
-        do about it, and where you want to take it next. That last part
-        matters most on the postdoc market — a PI wants to see the research
-        programme you'd bring to their group, not just what you've finished.
+        My dissertation approaches that from two directions. One is a
+        dual-target bioPROTAC co-degrading ERα and PI3K p85α, which
+        re-sensitizes tamoxifen-resistant breast cancer cells to endocrine
+        therapy and acts synergistically with tamoxifen (CI < 0.4). The
+        other is a KRAS-targeting degrader built on a TRIM21–RBCC
+        scaffold, where I identified a mutation in the hypervariable
+        region that lets KRAS escape degradation. Because that platform
+        depends on multimerization, the escape is mechanistic rather than
+        incidental — I traced it with all-atom molecular dynamics of the
+        farnesylated, membrane-embedded protein, and confirmed it against
+        an orthogonal, multimerization-independent degrader.
+
+        Resistance is the thread running through both. A degrader that
+        works in a naive line and fails in a resistant one is telling you
+        something about the target's conformational behaviour, and I think
+        that signal is worth reading rather than engineering around.
+
+        This is pulling me toward **de novo binder design**. If the
+        limiting reagent for a bioPROTAC is a binding domain against a
+        hard target, then designing binders directly — rather than
+        borrowing them — is the way to widen what degradation can reach.
+        I have been building that capability independently: reproducing
+        the CLAIRE small-molecule binder-design pipeline end-to-end, and
+        testing whether published multistate-design diagnostics generalize
+        to the conformational states of KRAS. That intersection —
+        structure-based design meeting degrader mechanism — is where I
+        would like to do my postdoc.
     design:
       columns: '1'
 
@@ -84,32 +110,37 @@ sections:
       view: citation
 
   # ── 5. Talks ─────────────────────────────────────────────────────────────
-  - block: collection
-    id: talks
-    content:
-      title: Talks & Presentations
-      filters:
-        folders:
-          - events
-    design:
-      view: card
+  # Commented out: with no items in `content/events/`, this renders as a bare
+  # heading with nothing under it. Add a folder there, then uncomment this
+  # block AND the "Talks" entry in `config/_default/menus.yaml`.
+  # - block: collection
+  #   id: talks
+  #   content:
+  #     title: Talks & Presentations
+  #     filters:
+  #       folders:
+  #         - events
+  #   design:
+  #     view: card
 
   # ── 6. News ──────────────────────────────────────────────────────────────
-  - block: collection
-    id: news
-    content:
-      title: News
-      subtitle: ''
-      text: ''
-      count: 5
-      filters:
-        folders:
-          - news
-      order: desc
-    design:
-      view: card
-      spacing:
-        padding: [0, 0, 0, 0]
+  # Commented out for the same reason — see the note above. Add a folder in
+  # `content/news/`, then uncomment this and the "News" menu entry.
+  # - block: collection
+  #   id: news
+  #   content:
+  #     title: News
+  #     subtitle: ''
+  #     text: ''
+  #     count: 5
+  #     filters:
+  #       folders:
+  #         - news
+  #     order: desc
+  #   design:
+  #     view: card
+  #     spacing:
+  #       padding: [0, 0, 0, 0]
 
   # ── 7. Contact ───────────────────────────────────────────────────────────
   # Social icons are pulled from `links:` in `data/authors/me.yaml`.
@@ -157,6 +188,7 @@ sections:
         title: 'Seeking postdoctoral positions'
         text: |-
           I expect to defend in June 2027 and am looking for postdoc
-          positions starting in late 2027, in TOPIC AREA. Happy to share my
-          research statement and references on request.
+          positions starting in late 2027, in computational protein design,
+          targeted protein degradation, and chemical biology. Happy to
+          share my research statement and references on request.
 ---

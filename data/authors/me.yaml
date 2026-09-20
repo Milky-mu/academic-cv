@@ -44,13 +44,28 @@ affiliations:
 # looking — search committees and prospective PIs read this first.
 bio: |
   I am Muzi Ouyang (欧阳木子) — I go by **Mia**. I am a PhD candidate in
-  Chemistry at Tsinghua University, advised by Prof. ADVISOR NAME. My
-  research is on YOUR TOPIC — ONE SENTENCE ON WHAT YOU FOUND OR BUILT.
+  Chemistry at Tsinghua University, advised by
+  [Prof. Ying Tan](https://www.sigs.tsinghua.edu.cn/ty_en/main.psp) (谭英)
+  at the Institute of Biopharmaceutical and Health Engineering (iBHE) in
+  Shenzhen. I work on
+  **targeted protein degradation**: designing bioPROTACs that recruit E3
+  ligases to destroy proteins small molecules struggle to drug — and
+  working out why that degradation sometimes fails.
 
-  My background spans animal science, basic medicine and chemistry, so I
-  work comfortably at the interface between them. (Rewrite or delete this
-  line — but a deliberate framing of an interdisciplinary path reads as a
-  strength, whereas leaving it unexplained invites the question.)
+  My dissertation has two halves. The first is a dual-target bioPROTAC
+  that co-degrades ERα and PI3K p85α, re-sensitizing tamoxifen-resistant
+  breast cancer cells to endocrine therapy. The second is a
+  KRAS-targeting degrader, where I found a resistance mutation in the
+  hypervariable region that lets KRAS escape a multimerization-dependent
+  platform, and used all-atom molecular dynamics to trace the
+  conformational mechanism behind the escape.
+
+  Alongside the wet lab I work in computational protein design — Rosetta,
+  ProteinMPNN and AlphaFold2 — including an end-to-end reproduction of
+  the CLAIRE de novo binder-design pipeline, published openly with its
+  debugging narrative. My training spans animal science, basic medicine
+  and chemistry, which is why I move between wet-lab mechanism and
+  computational design rather than choosing between them.
 
   **I expect to defend in June 2027 and am seeking postdoctoral
   positions starting in late 2027.** If my work overlaps with your group's,
@@ -81,9 +96,10 @@ links:
 
 # ── Research interests — a simple bulleted list on the homepage ────────────
 interests:
-  - First research interest
-  - Second research interest
-  - Third research interest
+  - Targeted protein degradation (PROTAC and bioPROTAC)
+  - Computational protein design (Rosetta, ProteinMPNN, AlphaFold2)
+  - Molecular dynamics and protein conformational mechanism
+  - Mechanisms of acquired drug resistance in cancer
 
 # ── EDUCATION ─────────────────────────────────────────────────────────────
 # Newest first. Rendered as cards on the homepage and as a timeline on
@@ -110,19 +126,30 @@ education:
     # end: omitted on purpose — renders as "Present" until you defend
     icon: custom/tsinghua
     summary: |
-      Thesis: *YOUR THESIS TITLE*. Advised by Prof. ADVISOR NAME.
+      Dissertation: dual-target bioPROTAC design and mechanisms of
+      endocrine resistance. Advised by
+      [Prof. Ying Tan](https://www.sigs.tsinghua.edu.cn/ty_en/main.psp).
+      Research focus: chemical biology, targeted protein degradation, and
+      AI-guided protein design.
   - degree: Master's Degree in Basic Medicine
     institution: Sun Yat-sen University
     year: "Sep 2020 – Jul 2023"
     start: 2020-09-01
     end: 2023-07-31
     icon: custom/sun-yat-sen
+    summary: |
+      Cancer molecular mechanisms, protein post-translational
+      modification, and inflammation–cancer crosstalk. Advised by
+      [Prof. Fangfang Duan](https://www.researchgate.net/profile/Fangfang-Duan-7).
   - degree: Bachelor's Degree in Animal Sciences
     institution: Northwest A&F University
     year: "Sep 2016 – Jul 2020"
     start: 2016-09-01
     end: 2020-07-31
     icon: custom/northwest-af
+    summary: |
+      Foundational training in animal experimentation, histology,
+      physiology and molecular biology.
 
 # ── EXPERIENCE ────────────────────────────────────────────────────────────
 # Newest first. Omit `end` for anything ongoing. `icon:` works here too.
@@ -134,47 +161,84 @@ experience:
     start: 2023-09-01
     icon: custom/tsinghua
     summary: |
-      What you actually do: the methods you run, the systems you built, the
-      results you got. Two or three sentences beats a bullet list here.
-  - role: Research Intern
-    org: Company or Institute
-    start: 2024-06-01
-    end: 2024-09-30
+      Designing dual-target bioPROTACs and dissecting how tumours escape
+      targeted degradation. Built a tumour-specific, DNA-encoded
+      bioPROTAC co-degrading ERα and PI3K p85α that acts synergistically
+      with tamoxifen in resistant breast cancer cells (CI < 0.4), and
+      engineered a KRAS-targeting degrader on a TRIM21–RBCC scaffold —
+      then traced a hypervariable-region mutation driving degradation
+      escape, using 200-ns all-atom molecular dynamics of the
+      farnesylated, membrane-embedded protein alongside cross-validated
+      proteomic and ubiquitomic profiling.
+  - role: Independent Computational Research
+    org: Self-directed
+    start: 2026-02-01
     summary: |
-      What the internship covered and what came out of it.
-  - role: Teaching Assistant
-    org: Your Department
-    start: 2023-01-01
-    end: 2023-06-30
+      Reproduced the CLAIRE de novo binder-design pipeline (Rosetta motif
+      matching, ProteinMPNN, AlphaFold2 self-consistency) end-to-end for
+      three small-molecule targets, building the compute environment from
+      scratch and fixing a latent defect in the original codebase. Also
+      extracted the computational recipe of Guo et al. (Science, 2025)
+      from the primary literature and built a three-layer framework to
+      test whether it generalises to KRAS.
+  - role: Graduate Researcher
+    org: Sun Yat-sen University
+    start: 2020-09-01
+    end: 2023-07-31
+    icon: custom/sun-yat-sen
     summary: |
-      Course name and level, and what you were responsible for.
+      Characterised the PGAM5–OGT interaction and its role in protein
+      stability and tumour invasion; contributed to an NSFC project on
+      P311 regulation of Periostin translation in pancreatic cancer
+      metastasis (Grant 32000543); and built SARS-CoV-2 replicon deletion
+      and mutation models, identifying nsp13-C16446T as an enhancer of
+      the nsp12 interaction.
 
 # ── Skills — shown on /experience/. `level` is 1-5. ───────────────────────
+# NOTE: the `level` numbers are a first pass — adjust them to your own
+# sense of where you stand. They drive the length of the bars only.
 skills:
-  - name: Technical
+  - name: Computational Protein Design
     items:
-      - label: Python
-        level: 5
-      - label: Add your own
-        level: 4
-  - name: Research
+      - label: Rosetta / PyRosetta
+      - label: ProteinMPNN
+      - label: AlphaFold2 / ColabFold
+  - name: Molecular Dynamics & Modelling
     items:
-      - label: Academic Writing
-        level: 4
-      - label: Experimental Design
-        level: 4
+      - label: GROMACS
+      - label: AMBER / AmberTools
+      - label: CHARMM-GUI
+      - label: Force-field parameterization
+  - name: Wet Lab
+    items:
+      - label: Mammalian cell culture
+      - label: Western blot
+      - label: Flow cytometry
+      - label: Co-immunoprecipitation
+      - label: Plasmid construction & transfection
+  - name: Data & Computing
+    items:
+      - label: Python scientific computing
+      - label: Linux / cloud GPU orchestration
+      - label: DIA mass-spectrometry quantification
+      - label: WGS variant calling
 
 languages:
+  - name: Chinese (Mandarin)
+    level: 5
+    label: Native
   - name: English
     level: 4
     label: Fluent
 
 # ── Awards, honours, fellowships, scholarships ────────────────────────────
 # On the postdoc market these carry real weight — list scholarships and
-# travel grants too, not just paper awards. Delete the block if empty.
-awards:
-  - title: Your Scholarship, Fellowship or Award
-    awarder: Awarding Body
-    date: "2024-01-01"
-    summary: One line on what it was for.
-    icon: hero/trophy
+# travel grants too, not just paper awards. Your CV lists none, so the
+# block is commented out rather than filled with a placeholder. Uncomment
+# and fill it in if you have any.
+# awards:
+#   - title: Award name
+#     awarder: Awarding body
+#     date: "2024-01-01"
+#     summary: One line on what it was for.
+#     icon: hero/trophy

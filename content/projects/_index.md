@@ -7,7 +7,7 @@ sections:
   - block: collection
     content:
       title: Projects
-      text: Software, datasets, and other things I've built. Replace this line with your own.
+      text: Independent computational work alongside my dissertation — reproducing published protein-design pipelines, and testing whether their methods generalize.
       filters:
         folders:
           - projects
