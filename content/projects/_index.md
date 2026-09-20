@@ -14,7 +14,10 @@ sections:
     design:
       view: article-grid
       fill_image: false
-      columns: 3
+      # The container is capped at 500px wide. `columns: 3` divided that by
+      # three and clipped the card's text mid-word. Raise this only when
+      # there are enough projects to fill the row.
+      columns: 1
       show_date: false
       show_read_time: false
       show_read_more: false
