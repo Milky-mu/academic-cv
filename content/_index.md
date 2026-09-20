@@ -138,7 +138,6 @@ sections:
       # candidate you hold none, and a visiting PI needs your time zone more.
       office_hours_title: 'Availability'
       office_hours:
-        - 'Shenzhen, China (UTC+8)'
         - 'Happy to arrange calls across time zones'
       # One entry per map provider — each renders as its own button.
       # Google Maps is unreachable from inside mainland China, and Amap
