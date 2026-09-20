@@ -306,17 +306,8 @@
         </div>
         {{ end }}
         
-        {{ if gt (len $office_hours) 0 }}
-        <div class="pt-4 border-t border-gray-200 dark:border-white/10">
-          <h4 class="font-semibold text-gray-900 dark:text-white mb-2">{{ $office_title }}</h4>
-          <div class="text-gray-600 dark:text-gray-300 space-y-1">
-            {{ range $office_hours }}
-            <p>{{ . }}</p>
-            {{ end }}
-          </div>
-        </div>
-        {{ end }}
-        
+        {{/* LOCAL OVERRIDE: the map buttons belong with the address they point
+             at, so they sit above the Availability block rather than after it. */}}
         {{ if gt (len $map_links) 0 }}
         <div class="flex flex-wrap gap-3 mt-4">
           {{ range $map_links }}
@@ -339,6 +330,18 @@
           {{ end }}
         </div>
         {{ end }}
+
+        {{ if gt (len $office_hours) 0 }}
+        <div class="pt-4 border-t border-gray-200 dark:border-white/10">
+          <h4 class="font-semibold text-gray-900 dark:text-white mb-2">{{ $office_title }}</h4>
+          <div class="text-gray-600 dark:text-gray-300 space-y-1">
+            {{ range $office_hours }}
+            <p>{{ . }}</p>
+            {{ end }}
+          </div>
+        </div>
+        {{ end }}
+        
       </div>
     </div>
     {{ end }}
