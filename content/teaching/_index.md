@@ -2,6 +2,11 @@
 title: 'Teaching'
 date: 2026-08-28
 type: landing
+# Unpublished for now: your CV lists no teaching yet, and an empty Teaching
+# page reads worse than no Teaching page. Delete this `draft` line and
+# uncomment the "Teaching" entry in `config/_default/menus.yaml` once you
+# have a course, a TA post, or guest lectures to list.
+draft: true
 
 sections:
   - block: collection
