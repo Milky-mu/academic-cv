@@ -22,11 +22,13 @@ sections:
     content:
       username: me
       text: ''
-      # Replace `static/uploads/resume.pdf` with your own CV, or delete this
-      # `button` block if you'd rather not offer a download.
+      # The file lives at `static/uploads/`. It is named after you rather
+      # than `resume.pdf` so it stays identifiable in a reviewer's
+      # downloads folder. Replace the file, keep the name, and this button
+      # needs no change.
       button:
         text: Download CV
-        url: uploads/resume.pdf
+        url: uploads/Ouyang-Muzi-CV.pdf
       # Leave blank for the defaults ("Professional Summary", "Education").
       headings:
         about: ''
