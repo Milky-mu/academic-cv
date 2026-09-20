@@ -130,7 +130,7 @@ education:
 # internships, and visiting positions go.
 experience:
   - role: Doctoral Researcher
-    org: Department of Chemistry, Tsinghua University
+    org: Institute of Biopharmaceutical and Health Engineering (iBHE), Tsinghua SIGS
     start: 2023-09-01
     icon: custom/tsinghua
     summary: |

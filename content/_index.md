@@ -132,13 +132,22 @@ sections:
         lines:
           - Institute of Biopharmaceutical and Health Engineering (iBHE)
           - Tsinghua Shenzhen International Graduate School
-          - Tsinghua Campus, Xili University Town
-          - Nanshan District, Shenzhen, Guangdong 518055
-          - China
+          - Tsinghua Campus, Xili University Town, Nanshan District
+          - Shenzhen 518055, China
+      # Relabels the block that upstream calls "Office Hours" — as a PhD
+      # candidate you hold none, and a visiting PI needs your time zone more.
+      office_hours_title: 'Availability'
       office_hours:
-        - 'By appointment — email me'
-      # Optional: paste a Google Maps share link
-      map_url: ''
+        - 'Shenzhen, China (UTC+8)'
+        - 'Happy to arrange calls across time zones'
+      # One entry per map provider — each renders as its own button.
+      # Google Maps is unreachable from inside mainland China, and Amap
+      # (高德) is what a visitor there will actually use, so offer both.
+      map_url:
+        - label: 'Google Maps'
+          url: 'https://www.google.com/maps/search/?api=1&query=Tsinghua+Shenzhen+International+Graduate+School'
+        - label: 'Amap 高德地图'
+          url: 'https://uri.amap.com/search?keyword=%E6%B8%85%E5%8D%8E%E5%A4%A7%E5%AD%A6%E6%B7%B1%E5%9C%B3%E5%9B%BD%E9%99%85%E7%A0%94%E7%A9%B6%E7%94%9F%E9%99%A2&city=%E6%B7%B1%E5%9C%B3'
       # Set true only if you have configured a form backend in `form_action`
       show_form: false
       form_action: ''

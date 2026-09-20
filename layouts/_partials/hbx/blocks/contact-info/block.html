@@ -86,11 +86,46 @@
   {{ if $line }}{{ $office_hours = slice $line }}{{ end }}
 {{ end }}
 
+{{/* LOCAL OVERRIDE: upstream hard-coded the "Office Hours" heading. A PhD
+     candidate holds none, so allow the slot to be relabelled (e.g.
+     "Availability") via `office_hours_title`. Falls back to the original. */}}
+{{ $office_title := i18n "block_contact_office_hours" | default "Office Hours" }}
+{{ $office_title_raw := index $content "office_hours_title" }}
+{{ if eq (printf "%T" $office_title_raw) "string" }}
+  {{ $office_title_raw = strings.TrimSpace $office_title_raw }}
+  {{ if ne $office_title_raw "" }}
+    {{ $office_title = $office_title_raw }}
+  {{ end }}
+{{ end }}
+
+{{/* LOCAL OVERRIDE: `map_url` may be a single link (upstream) or a list of
+     them, each optionally carrying its own `label`, so the card can offer
+     more than one map provider. $map_url keeps the first, so the
+     has-content check below behaves exactly as it did upstream. */}}
+{{ $map_links := slice }}
 {{ $map_url := "" }}
 {{ $map_url_raw := index $content "map_url" }}
+{{ $map_default_label := i18n "block_contact_view_on_map" | default "View on Map" }}
 {{ if eq (printf "%T" $map_url_raw) "string" }}
-  {{ $map_url = strings.TrimSpace $map_url_raw }}
+  {{ with strings.TrimSpace $map_url_raw }}
+    {{ $map_links = $map_links | append (dict "url" . "label" $map_default_label) }}
+  {{ end }}
+{{ else if reflect.IsSlice $map_url_raw }}
+  {{ range $map_url_raw }}
+    {{ $u := "" }}
+    {{ $l := $map_default_label }}
+    {{ if reflect.IsMap . }}
+      {{ with index . "url" }}{{ $u = strings.TrimSpace (printf "%v" .) }}{{ end }}
+      {{ with index . "label" }}
+        {{ with strings.TrimSpace (printf "%v" .) }}{{ $l = . }}{{ end }}
+      {{ end }}
+    {{ else if eq (printf "%T" .) "string" }}
+      {{ $u = strings.TrimSpace . }}
+    {{ end }}
+    {{ if $u }}{{ $map_links = $map_links | append (dict "url" $u "label" $l) }}{{ end }}
+  {{ end }}
 {{ end }}
+{{ if gt (len $map_links) 0 }}{{ $map_url = index (index $map_links 0) "url" }}{{ end }}
 
 {{ $map_embed := "" }}
 {{ $map_embed_raw := index $content "map_embed" }}
@@ -246,7 +281,9 @@
   </div>
 
   {{/* Contact Cards Grid */}}
-  <div class="grid {{ $grid_class }} gap-8 lg:gap-12">
+  {{/* LOCAL OVERRIDE: `items-start` stops the shorter card stretching to
+     match the taller one, which left a tall empty gap under the address. */}}
+  <div class="grid {{ $grid_class }} gap-8 lg:gap-12 items-start">
     
     {{/* Visit Us Card - Only show if has content */}}
     {{ if $has_visit_content }}
@@ -271,7 +308,7 @@
         
         {{ if gt (len $office_hours) 0 }}
         <div class="pt-4 border-t border-gray-200 dark:border-white/10">
-          <h4 class="font-semibold text-gray-900 dark:text-white mb-2">{{ i18n "block_contact_office_hours" | default "Office Hours" }}</h4>
+          <h4 class="font-semibold text-gray-900 dark:text-white mb-2">{{ $office_title }}</h4>
           <div class="text-gray-600 dark:text-gray-300 space-y-1">
             {{ range $office_hours }}
             <p>{{ . }}</p>
@@ -280,22 +317,27 @@
         </div>
         {{ end }}
         
-        {{ if $map_url }}
-        {{ $map_link := $map_url }}
-        {{ $map_target := "" }}
-        {{ $map_scheme := (urls.Parse $map_link).Scheme }}
-        {{ if not $map_scheme }}
-          {{ if not (hasPrefix $map_link "#") }}
-            {{ $map_link = $map_link | relLangURL }}
+        {{ if gt (len $map_links) 0 }}
+        <div class="flex flex-wrap gap-3 mt-4">
+          {{ range $map_links }}
+          {{ $map_link := index . "url" }}
+          {{ $map_label := index . "label" }}
+          {{ $map_target := "" }}
+          {{ $map_scheme := (urls.Parse $map_link).Scheme }}
+          {{ if not $map_scheme }}
+            {{ if not (hasPrefix $map_link "#") }}
+              {{ $map_link = $map_link | relLangURL }}
+            {{ end }}
+          {{ else if in (slice "http" "https") $map_scheme }}
+            {{ $map_target = "target=\"_blank\" rel=\"noopener\"" }}
           {{ end }}
-        {{ else if in (slice "http" "https") $map_scheme }}
-          {{ $map_target = "target=\"_blank\" rel=\"noopener\"" }}
-        {{ end }}
-        <a href="{{ $map_link | safeURL }}" {{ $map_target | safeHTMLAttr }}
-           class="inline-flex items-center mt-4 px-4 py-2 bg-primary-100 dark:bg-primary-500/10 text-primary-700 dark:text-primary-400 rounded-lg border border-primary-200 dark:border-primary-500/20 hover:bg-primary-200 dark:hover:bg-primary-500/20 hover:border-primary-300 dark:hover:border-primary-500/40 transition-all">
-          {{ partial "functions/get_icon" (dict "name" "hero/map" "attributes" "class=\"w-5 h-5 mr-2\"") }}
-          {{ i18n "block_contact_view_on_map" | default "View on Map" }}
-        </a>
+          <a href="{{ $map_link | safeURL }}" {{ $map_target | safeHTMLAttr }}
+             class="inline-flex items-center px-4 py-2 bg-primary-100 dark:bg-primary-500/10 text-primary-700 dark:text-primary-400 rounded-lg border border-primary-200 dark:border-primary-500/20 hover:bg-primary-200 dark:hover:bg-primary-500/20 hover:border-primary-300 dark:hover:border-primary-500/40 transition-all">
+            {{ partial "functions/get_icon" (dict "name" "hero/map" "attributes" "class=\"w-5 h-5 mr-2\"") }}
+            {{ $map_label }}
+          </a>
+          {{ end }}
+        </div>
         {{ end }}
       </div>
     </div>
