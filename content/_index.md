@@ -22,13 +22,15 @@ sections:
     content:
       username: me
       text: ''
-      # The file lives at `static/uploads/`. It is named after you rather
-      # than `resume.pdf` so it stays identifiable in a reviewer's
-      # downloads folder. Replace the file, keep the name, and this button
-      # needs no change.
-      button:
-        text: Download CV
-        url: uploads/Ouyang-Muzi-CV.pdf
+      # ── CV button: temporarily off ──────────────────────────────────────
+      # The PDF was taken down while the CV is being trimmed. To put it
+      # back: drop the new file at `static/uploads/Ouyang-Muzi-CV.pdf` and
+      # uncomment the three lines below. The button only renders when both
+      # `text` and `url` are non-empty, so leaving it commented hides it
+      # cleanly — no placeholder, no dead link.
+      # button:
+      #   text: Download CV
+      #   url: uploads/Ouyang-Muzi-CV.pdf
       # Leave blank for the defaults ("Professional Summary", "Education").
       headings:
         about: ''
