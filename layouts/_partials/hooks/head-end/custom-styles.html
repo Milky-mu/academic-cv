@@ -100,4 +100,30 @@
     text-align: justify;
     hyphens: auto;
   }
+
+  /* ── Even spacing between homepage sections ────────────────────────────
+     Every block stacked its own padding on top of the theme's 6rem section
+     padding, so the gaps ranged from about 4rem to over 15rem. Each section
+     now pads 2rem top and bottom (4rem between any two sections) and the
+     blocks' own outer padding is removed:
+       - bio block: its own bottom padding (up to 8rem) is cut to 2rem; the
+         section's padding is zeroed in content/_index.md so the top keeps
+         meeting the navbar.
+       - Selected Publications: the grid's container added 1.25–2rem.
+       - All Publications: a 4–5rem margin between title and list.
+       - Contact: its own 3–5rem padding is removed in its block template. */
+  body:has(.resume-biography) .hbb-section {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+  .resume-biography {
+    padding-bottom: 2rem;
+  }
+  #papers .container {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  #publications .container {
+    margin-top: 0;
+  }
 </style>

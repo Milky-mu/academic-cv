@@ -37,12 +37,12 @@ sections:
         education: ''
         interests: ''
     design:
-      # padding: [top, right, bottom, left]. Top is 0 to close the white band
-      # between the navbar and this section — .hbb-section defaults to 6rem
-      # top padding, and the section's tinted background sits on an inner
-      # div, so that 6rem showed the plain white page background.
+      # padding: [top, right, bottom, left]. Top is 0 so the bio starts right
+      # under the navbar. Bottom is 0 too: the bio block's own 2rem bottom
+      # padding (custom-styles.html, "Even spacing") gives the same gap to
+      # Research as every other pair of sections.
       spacing:
-        padding: ['0', '0', '6rem', '0']
+        padding: ['0', '0', '0', '0']
       banner:
         filename: kalen-emsley-Bkci_8qcdvQ-unsplash.jpg
       name:

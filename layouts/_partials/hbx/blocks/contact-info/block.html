@@ -263,8 +263,11 @@
   {{ $is_single_card = true }}
 {{ end }}
 
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
-  
+{{/* LOCAL OVERRIDE: upstream also padded this py-12 sm:py-16 lg:py-20 on
+     top of the section's own padding; dropped so the gap above Contact
+     matches the gaps between the other homepage sections. */}}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
   {{/* Section Header */}}
   <div class="text-center mb-12">
     {{ with $title }}
