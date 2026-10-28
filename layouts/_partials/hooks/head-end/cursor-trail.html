@@ -2,7 +2,8 @@
      A full-screen canvas sits above the page (it ignores clicks) and draws a
      soft halo that follows the pointer, plus a trail of light along its
      recent path that thins and fades out over TRAIL_LIFE ms. A click sets off
-     a flash, a spreading ring and a burst of sparks. The colour comes
+     a flash, a spreading ring and a burst of sparks. While a page is loading,
+     a turning DNA double helix appears beside the pointer. The colour comes
      from the theme's primary colour, so it follows theme.colors.primary.
      Skipped on touch screens and for visitors who ask for reduced motion.
 
@@ -36,8 +37,14 @@
     var CLICK_LIFE = 650;  // how long a click burst lasts, in ms
     var RING_RADIUS = 38;  // how far the click ring spreads, in px
     var SPARKS = 10;       // sparks thrown out by each click
+    var DNA_HEIGHT = 36;   // height of the loading helix beside the pointer, in px
+    var DNA_RADIUS = 8;    // half its width, in px
+    var DNA_SPEED = 0.8;   // turns per second
 
-    var canvas, ctx, sprite, color;
+    var canvas, ctx, sprite, color, color2;
+    var pageLoading = document.readyState !== 'complete';
+    var busyCursor = false;  // pointer is over something showing a wait cursor
+    var dnaAlpha = 0;        // fades the helix in and out
     var points = [];       // recent head positions, oldest first
     var bursts = [];       // click effects still playing, oldest first
     var mouse = null;      // where the pointer is
@@ -50,6 +57,9 @@
         .getPropertyValue('--hb-primary-500-rgb').trim();
       // The theme stores "r g b"; normalise in case it is ever "r, g, b".
       color = v ? v.split(/[\s,]+/).join(' ') : '99 102 241';
+      var v2 = getComputedStyle(document.documentElement)
+        .getPropertyValue('--hb-secondary-500-rgb').trim();
+      color2 = v2 ? v2.split(/[\s,]+/).join(' ') : '236 72 153';
       makeSprite();
     }
 
@@ -87,6 +97,48 @@
     function stamp(x, y, size, alpha) {
       ctx.globalAlpha = alpha;
       ctx.drawImage(sprite, x - size / 2, y - size / 2, size, size);
+    }
+
+    // A double helix seen side-on, turning about its vertical axis. Each
+    // backbone is a sine wave; the two are half a turn apart. Depth (which
+    // strand is nearer) comes from the sine of the same angle and sets each
+    // piece's size and opacity, which is what makes it read as 3D.
+    function drawDNA(cx, top, alpha, now) {
+      var phase = now / 1000 * DNA_SPEED * Math.PI * 2;
+      var twist = Math.PI * 2 / DNA_HEIGHT * 0.9;  // radians per px of height
+      var strands = [color, color2];
+
+      ctx.lineCap = 'round';
+
+      // Base pairs, drawn first so the backbones sit over their ends.
+      for (var y = 3; y < DNA_HEIGHT; y += 4.5) {
+        var a = phase + y * twist;
+        var dx = Math.cos(a) * DNA_RADIUS;
+        ctx.globalAlpha = alpha * 0.35;
+        ctx.strokeStyle = 'rgb(' + color + ')';
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.moveTo(cx + dx, top + y);
+        ctx.lineTo(cx - dx, top + y);
+        ctx.stroke();
+      }
+
+      // Backbones, in short pieces so each can take its own depth.
+      for (var s = 0; s < 2; s++) {
+        ctx.strokeStyle = 'rgb(' + strands[s] + ')';
+        var off = s * Math.PI;
+        for (var y2 = 0; y2 < DNA_HEIGHT; y2 += 1.5) {
+          var a0 = phase + y2 * twist + off;
+          var a1 = phase + (y2 + 1.5) * twist + off;
+          var depth = (Math.sin(a0) + 1) / 2;   // 0 = far, 1 = near
+          ctx.globalAlpha = alpha * (0.3 + 0.7 * depth);
+          ctx.lineWidth = 1.4 + 1.6 * depth;
+          ctx.beginPath();
+          ctx.moveTo(cx + Math.cos(a0) * DNA_RADIUS, top + y2);
+          ctx.lineTo(cx + Math.cos(a1) * DNA_RADIUS, top + y2 + 1.5);
+          ctx.stroke();
+        }
+      }
     }
 
     function ease(life) {
@@ -167,12 +219,20 @@
                 sp.size * (1 - 0.5 * p), (dark ? 0.9 : 0.7) * fade);
         }
       }
+      // Loading helix: sits just below-right of the pointer, like the
+      // spinner beside a system busy cursor, and fades in and out.
+      var loading = pageLoading || busyCursor;
+      dnaAlpha += ((loading ? 1 : 0) - dnaAlpha) * Math.min(1, dt / 120);
+      if (head && dnaAlpha > 0.01) {
+        ctx.globalCompositeOperation = 'source-over';
+        drawDNA(head.x + 24, head.y + 10, dnaAlpha, now);
+      }
       ctx.globalAlpha = 1;
 
-      // Stop animating once the trail and any bursts have faded and the head
-      // has caught up; the last frame stays on the canvas until the pointer
-      // moves again.
-      if (points.length || bursts.length || !settled) {
+      // Stop animating once the trail and any bursts have faded, the head
+      // has caught up and nothing is loading; the last frame stays on the
+      // canvas until the pointer moves again.
+      if (points.length || bursts.length || !settled || loading || dnaAlpha > 0.01) {
         requestAnimationFrame(frame);
       } else {
         running = false;
@@ -216,6 +276,24 @@
       window.addEventListener('resize', resize);
       window.addEventListener('pointermove', onMove, { passive: true });
       window.addEventListener('pointerdown', onDown, { passive: true });
+
+      // "Loading" means: the page is still loading, the visitor has just
+      // left for another page and it hasn't appeared yet, or the pointer is
+      // over something that shows a wait cursor.
+      window.addEventListener('load', function () { pageLoading = false; });
+      window.addEventListener('beforeunload', function () {
+        pageLoading = true;
+        start();
+        // A mailto: or download link fires this too but never leaves the
+        // page; don't leave the helix spinning forever when that happens.
+        setTimeout(function () { pageLoading = false; }, 5000);
+      });
+      window.addEventListener('pageshow', function () { pageLoading = false; });
+      document.addEventListener('pointerover', function (e) {
+        var c = getComputedStyle(e.target).cursor;
+        busyCursor = c === 'wait' || c === 'progress';
+        if (busyCursor) start();
+      }, { passive: true });
       document.documentElement.addEventListener('mouseleave', onLeave);
       // The theme toggle swaps the class on <html>; re-read the colour then.
       new MutationObserver(function () { readColor(); start(); })
