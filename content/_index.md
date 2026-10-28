@@ -53,7 +53,7 @@ sections:
 
   # ── 2. Research ──────────────────────────────────────────────────────────
   # A local block (layouts/_partials/hbx/blocks/research-labs): a lead
-  # line, then one card per area, stacked. Add, remove or reorder areas
+  # line, then one card per area, side by side. Add, remove or reorder areas
   # freely; `icon` takes any Hero icon name.
   - block: research-labs
     id: research
@@ -89,7 +89,7 @@ sections:
             The wet-lab puzzles above are usually what send me back to the
             computer. To explain why the KRAS mutation broke degrader
             activity, I ran **182-ns all-atom molecular dynamics simulations**
-            (AMBER, with explicit GppNHp and Mg²⁺) and showed that the
+            (AMBER, with explicit GppNHp and Mg^2+^) and showed that the
             mutation changes how KRAS clusters at the membrane, which the
             degrader's activity turns out to depend on; swapping in a degrader
             architecture that doesn't rely on clustering restored activity,

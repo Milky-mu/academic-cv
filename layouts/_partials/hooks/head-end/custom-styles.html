@@ -72,10 +72,16 @@
     font-size: 1.125rem;
     font-style: italic;
   }
+  /* Two columns side by side; one column on phones. */
   .research-cards {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr;
     gap: 1.75rem;
+  }
+  @media (min-width: 768px) {
+    .research-cards {
+      grid-template-columns: 1fr 1fr;
+    }
   }
   .research-label {
     font-size: 0.75rem;
@@ -87,7 +93,10 @@
   .research-body {
     max-width: none;
   }
+  /* Half-width columns are narrow for justified text; hyphenation keeps
+     the word gaps from stretching into rivers. */
   .research-body p {
     text-align: justify;
+    hyphens: auto;
   }
 </style>
