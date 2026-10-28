@@ -3,20 +3,28 @@
      <head> on every page. Only put .html files here — any other file (a
      .gitkeep, a README) is also executed as a template and crashes the build. */}}
 <style>
-  /* ── Hero background ───────────────────────────────────────────────────
-     The theme paints the hero as one flat colour. These soft radial washes
-     give it depth without a background image. They are built from the theme's
-     own colour variables, so changing theme.colors.primary in params.yaml
-     restyles this automatically. Raise the alpha values for more colour,
-     lower them (or delete the rule) for a flat background. */
-  .resume-biography {
+  /* ── Homepage background ───────────────────────────────────────────────
+     Soft radial washes that give the page depth without a background image.
+     They used to sit on the hero alone, which left a hard edge where the
+     Research section started. Now they live on a layer pinned to the
+     viewport, so the wash covers every section and stays in place while the
+     content scrolls over it. Scoped to the homepage (the only page with the
+     bio block). Built from the theme's colour variables, so changing
+     theme.colors.primary in params.yaml restyles it automatically. Raise the
+     alpha values for more colour, lower them for a flatter page. */
+  body:has(.resume-biography)::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
     background-image:
       radial-gradient(58% 78% at 10% 12%, rgb(var(--hb-primary-500-rgb) / 0.14) 0%, transparent 62%),
       radial-gradient(52% 72% at 90% 8%,  rgb(var(--hb-secondary-500-rgb) / 0.13) 0%, transparent 64%),
       radial-gradient(68% 62% at 72% 98%, rgb(var(--hb-primary-400-rgb) / 0.10) 0%, transparent 66%),
       radial-gradient(48% 60% at 30% 92%, rgb(var(--hb-secondary-400-rgb) / 0.08) 0%, transparent 68%);
   }
-  :where(.dark) .resume-biography {
+  :where(.dark) body:has(.resume-biography)::before {
     background-image:
       radial-gradient(58% 78% at 10% 12%, rgb(var(--hb-primary-500-rgb) / 0.26) 0%, transparent 62%),
       radial-gradient(52% 72% at 90% 8%,  rgb(var(--hb-secondary-500-rgb) / 0.22) 0%, transparent 64%),
