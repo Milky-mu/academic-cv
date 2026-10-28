@@ -491,6 +491,8 @@
             {{ with index . "end" }}{{ $end = printf "%v" . }}{{ end }}
             {{ $institution := "" }}
             {{ with index . "institution" }}{{ $institution = printf "%v" . }}{{ end }}
+            {{ $url := "" }}
+            {{ with index . "url" }}{{ $url = printf "%v" . }}{{ end }}
             {{ $icon := "" }}
             {{ $iconRaw := index . "icon" }}
             {{ if eq (printf "%T" $iconRaw) "string" }}
@@ -498,6 +500,7 @@
             {{ end }}
             <div class="group h-full flex flex-col bg-gradient-to-br from-white/90 to-primary-50/30 dark:from-gray-800/90 dark:to-primary-900/20 rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 border border-transparent hover:border-primary-200 dark:hover:border-primary-800 backdrop-blur-md">
               <div class="flex gap-4">
+                {{ if $url }}<a href="{{ $url }}" target="_blank" rel="noopener" aria-label="{{ $institution }}" class="flex-shrink-0">{{ end }}
                 <div class="flex-shrink-0 w-12 h-12 bg-white dark:bg-gray-800 ring-1 ring-gray-200 dark:ring-gray-700 rounded-full flex items-center justify-center shadow-md">
                   {{ if $icon }}
                     {{ partial "functions/get_icon" (dict "name" $icon "attributes" "class='w-6 h-6 text-primary-600 dark:text-primary-400'") }}
@@ -505,6 +508,7 @@
                     {{ partial "functions/get_icon" (dict "name" "academic-cap" "attributes" "class='w-6 h-6 text-primary-600 dark:text-primary-400'") }}
                   {{ end }}
                 </div>
+                {{ if $url }}</a>{{ end }}
                 <div class="flex-1 flex-grow">
                   {{ if $degree }}
                   <p class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
@@ -520,7 +524,9 @@
                     </p>
                   {{ end }}
                   {{ if $institution }}
-                    <p class="text-gray-700 dark:text-gray-300 text-base">{{ $institution }}</p>
+                    <p class="text-gray-700 dark:text-gray-300 text-base">
+                      {{ if $url }}<a href="{{ $url }}" target="_blank" rel="noopener" class="hover:text-primary-600 dark:hover:text-primary-400 hover:underline underline-offset-2">{{ $institution }}</a>{{ else }}{{ $institution }}{{ end }}
+                    </p>
                   {{ end }}
                 </div>
               </div>

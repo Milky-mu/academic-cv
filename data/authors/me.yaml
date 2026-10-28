@@ -121,6 +121,7 @@ interests:
 education:
   - degree: PhD in Chemistry
     institution: Tsinghua University
+    url: https://www.tsinghua.edu.cn/en/
     year: "Sep 2023 – Jun 2027 (expected)"
     start: 2023-09-01
     # end: omitted on purpose — renders as "Present" until you defend
@@ -133,6 +134,7 @@ education:
       AI-guided protein design.
   - degree: Master's Degree in Basic Medicine
     institution: Sun Yat-sen University
+    url: https://www.sysu.edu.cn/sysuen/
     year: "Sep 2020 – Jul 2023"
     start: 2020-09-01
     end: 2023-07-31
@@ -143,6 +145,7 @@ education:
       [Prof. Fangfang Duan](https://www.researchgate.net/profile/Fangfang-Duan-7).
   - degree: Bachelor's Degree in Animal Sciences
     institution: Northwest A&F University
+    url: https://en.nwafu.edu.cn/
     year: "Sep 2016 – Jul 2020"
     start: 2016-09-01
     end: 2020-07-31
