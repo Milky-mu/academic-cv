@@ -1,7 +1,8 @@
 {{/* Glowing cursor with a fading light trail.
      A full-screen canvas sits above the page (it ignores clicks) and draws a
      soft halo that follows the pointer, plus a trail of light along its
-     recent path that thins and fades out over TRAIL_LIFE ms. The colour comes
+     recent path that thins and fades out over TRAIL_LIFE ms. A click sets off
+     a flash, a spreading ring and a burst of sparks. The colour comes
      from the theme's primary colour, so it follows theme.colors.primary.
      Skipped on touch screens and for visitors who ask for reduced motion.
 
@@ -32,9 +33,13 @@
     var TRAIL_SIZE = 30;   // diameter of the trail where it is freshest, in px
     var FOLLOW = 0.35;     // how quickly the head catches up, per 60 fps frame
     var SPACING = 2;       // distance between glow dots along the trail, in px
+    var CLICK_LIFE = 650;  // how long a click burst lasts, in ms
+    var RING_RADIUS = 38;  // how far the click ring spreads, in px
+    var SPARKS = 10;       // sparks thrown out by each click
 
     var canvas, ctx, sprite, color;
     var points = [];       // recent head positions, oldest first
+    var bursts = [];       // click effects still playing, oldest first
     var mouse = null;      // where the pointer is
     var head = null;       // where the trail is drawn from; eases towards mouse
     var running = false;
@@ -111,8 +116,8 @@
       // Additive blending makes the light bloom on a dark page; on a light
       // page it would wash out to white, so plain blending is used there.
       ctx.globalCompositeOperation = dark ? 'lighter' : 'source-over';
-      var glowAlpha = dark ? 0.07 : 0.05;
-      var coreAlpha = dark ? 0.3 : 0.22;
+      var glowAlpha = dark ? 0.035 : 0.025;
+      var coreAlpha = dark ? 0.15 : 0.11;
 
       // Walk the trail and drop a glow dot every SPACING px, interpolating
       // both position and age between recorded points.
@@ -136,11 +141,38 @@
         stamp(head.x, head.y, HALO_SIZE, dark ? 0.55 : 0.38);
         stamp(head.x, head.y, HALO_SIZE * 0.22, dark ? 0.9 : 0.6);
       }
+
+      // Click bursts: a flash, a ring that spreads out, and sparks that fly
+      // outwards and slow down, all fading over CLICK_LIFE ms.
+      while (bursts.length && now - bursts[0].t > CLICK_LIFE) bursts.shift();
+      ctx.lineWidth = 1.5;
+      for (var j = 0; j < bursts.length; j++) {
+        var bu = bursts[j];
+        var p = (now - bu.t) / CLICK_LIFE;      // 0 → 1
+        var out = 1 - Math.pow(1 - p, 3);       // ease-out cubic
+        var fade = 1 - p;
+
+        stamp(bu.x, bu.y, 30 + 50 * out, (dark ? 0.5 : 0.35) * fade * fade);
+
+        ctx.globalAlpha = (dark ? 0.8 : 0.6) * fade;
+        ctx.strokeStyle = 'rgb(' + color + ')';
+        ctx.beginPath();
+        ctx.arc(bu.x, bu.y, 6 + RING_RADIUS * out, 0, Math.PI * 2);
+        ctx.stroke();
+
+        for (var n = 0; n < bu.sparks.length; n++) {
+          var sp = bu.sparks[n];
+          var r = sp.dist * out;
+          stamp(bu.x + Math.cos(sp.angle) * r, bu.y + Math.sin(sp.angle) * r,
+                sp.size * (1 - 0.5 * p), (dark ? 0.9 : 0.7) * fade);
+        }
+      }
       ctx.globalAlpha = 1;
 
-      // Stop animating once the trail has faded and the head has caught up;
-      // the last frame stays on the canvas until the pointer moves again.
-      if (points.length || !settled) {
+      // Stop animating once the trail and any bursts have faded and the head
+      // has caught up; the last frame stays on the canvas until the pointer
+      // moves again.
+      if (points.length || bursts.length || !settled) {
         requestAnimationFrame(frame);
       } else {
         running = false;
@@ -150,6 +182,20 @@
     function onMove(e) {
       mouse = { x: e.clientX, y: e.clientY };
       if (!head) head = { x: mouse.x, y: mouse.y };
+      start();
+    }
+
+    function onDown(e) {
+      var sparks = [];
+      for (var i = 0; i < SPARKS; i++) {
+        sparks.push({
+          // Evenly spread, with a little jitter so bursts don't look stamped.
+          angle: (i / SPARKS) * Math.PI * 2 + (Math.random() - 0.5) * 0.5,
+          dist: RING_RADIUS * (0.9 + Math.random() * 0.8),
+          size: 8 + Math.random() * 6
+        });
+      }
+      bursts.push({ x: e.clientX, y: e.clientY, t: performance.now(), sparks: sparks });
       start();
     }
 
@@ -169,6 +215,7 @@
 
       window.addEventListener('resize', resize);
       window.addEventListener('pointermove', onMove, { passive: true });
+      window.addEventListener('pointerdown', onDown, { passive: true });
       document.documentElement.addEventListener('mouseleave', onLeave);
       // The theme toggle swaps the class on <html>; re-read the colour then.
       new MutationObserver(function () { readColor(); start(); })
