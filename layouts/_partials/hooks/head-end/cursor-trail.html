@@ -1,0 +1,184 @@
+{{/* Glowing cursor with a fading light trail.
+     A full-screen canvas sits above the page (it ignores clicks) and draws a
+     soft halo that follows the pointer, plus a trail of light along its
+     recent path that thins and fades out over TRAIL_LIFE ms. The colour comes
+     from the theme's primary colour, so it follows theme.colors.primary.
+     Skipped on touch screens and for visitors who ask for reduced motion.
+
+     Why it looks smooth: the trail is not drawn through the raw mouse
+     positions, which arrive unevenly and would give a jagged polyline.
+     Instead a "head" eases towards the pointer every animation frame and the
+     trail records the head, so its path is a smooth curve. The trail is then
+     painted as a dense row of soft glow dots rather than stroked lines, so
+     there are no hard edges or corners, and each dot fades on an ease-out
+     curve instead of linearly. */}}
+<style>
+  #cursor-trail {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 9999;
+  }
+</style>
+<script>
+  (function () {
+    if (!window.matchMedia('(pointer: fine)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var TRAIL_LIFE = 700;  // how long the trail lingers, in ms
+    var HALO_SIZE = 72;    // diameter of the glow around the pointer, in px
+    var TRAIL_SIZE = 30;   // diameter of the trail where it is freshest, in px
+    var FOLLOW = 0.35;     // how quickly the head catches up, per 60 fps frame
+    var SPACING = 2;       // distance between glow dots along the trail, in px
+
+    var canvas, ctx, sprite, color;
+    var points = [];       // recent head positions, oldest first
+    var mouse = null;      // where the pointer is
+    var head = null;       // where the trail is drawn from; eases towards mouse
+    var running = false;
+    var lastTime = 0;
+
+    function readColor() {
+      var v = getComputedStyle(document.documentElement)
+        .getPropertyValue('--hb-primary-500-rgb').trim();
+      // The theme stores "r g b"; normalise in case it is ever "r, g, b".
+      color = v ? v.split(/[\s,]+/).join(' ') : '99 102 241';
+      makeSprite();
+    }
+
+    // One soft glow dot, drawn once and then stamped along the trail.
+    function makeSprite() {
+      var s = 128;
+      sprite = document.createElement('canvas');
+      sprite.width = sprite.height = s;
+      var c = sprite.getContext('2d');
+      var g = c.createRadialGradient(s / 2, s / 2, 0, s / 2, s / 2, s / 2);
+      g.addColorStop(0, 'rgb(' + color + ' / 1)');
+      g.addColorStop(0.25, 'rgb(' + color + ' / 0.55)');
+      g.addColorStop(0.6, 'rgb(' + color + ' / 0.15)');
+      g.addColorStop(1, 'rgb(' + color + ' / 0)');
+      c.fillStyle = g;
+      c.fillRect(0, 0, s, s);
+    }
+
+    function resize() {
+      var dpr = window.devicePixelRatio || 1;
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      start();
+    }
+
+    function start() {
+      if (!running) {
+        running = true;
+        lastTime = performance.now();
+        requestAnimationFrame(frame);
+      }
+    }
+
+    function stamp(x, y, size, alpha) {
+      ctx.globalAlpha = alpha;
+      ctx.drawImage(sprite, x - size / 2, y - size / 2, size, size);
+    }
+
+    function ease(life) {
+      return life * life * (3 - 2 * life);  // smoothstep: soft start, soft end
+    }
+
+    function frame(now) {
+      var dt = Math.min(now - lastTime, 50);
+      lastTime = now;
+
+      // Move the head towards the pointer at the same speed at any frame rate.
+      var settled = true;
+      if (mouse) {
+        var k = 1 - Math.pow(1 - FOLLOW, dt / 16.67);
+        head.x += (mouse.x - head.x) * k;
+        head.y += (mouse.y - head.y) * k;
+        settled = Math.abs(mouse.x - head.x) < 0.2 && Math.abs(mouse.y - head.y) < 0.2;
+        var last = points[points.length - 1];
+        if (!last || Math.abs(last.x - head.x) + Math.abs(last.y - head.y) > 0.5) {
+          points.push({ x: head.x, y: head.y, t: now });
+        }
+      }
+      while (points.length && now - points[0].t > TRAIL_LIFE) points.shift();
+
+      var dark = document.documentElement.classList.contains('dark');
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+      // Additive blending makes the light bloom on a dark page; on a light
+      // page it would wash out to white, so plain blending is used there.
+      ctx.globalCompositeOperation = dark ? 'lighter' : 'source-over';
+      var glowAlpha = dark ? 0.07 : 0.05;
+      var coreAlpha = dark ? 0.3 : 0.22;
+
+      // Walk the trail and drop a glow dot every SPACING px, interpolating
+      // both position and age between recorded points.
+      for (var i = 1; i < points.length; i++) {
+        var a = points[i - 1], b = points[i];
+        var dist = Math.hypot(b.x - a.x, b.y - a.y);
+        var steps = Math.max(1, Math.ceil(dist / SPACING));
+        for (var s = 0; s < steps; s++) {
+          var f = s / steps;
+          var life = 1 - (now - (a.t + (b.t - a.t) * f)) / TRAIL_LIFE;
+          if (life <= 0) continue;
+          var e = ease(life);
+          var x = a.x + (b.x - a.x) * f;
+          var y = a.y + (b.y - a.y) * f;
+          stamp(x, y, TRAIL_SIZE * (0.25 + 0.75 * e), glowAlpha * e);
+          stamp(x, y, TRAIL_SIZE * 0.3 * (0.3 + 0.7 * e), coreAlpha * e);
+        }
+      }
+
+      if (head) {
+        stamp(head.x, head.y, HALO_SIZE, dark ? 0.55 : 0.38);
+        stamp(head.x, head.y, HALO_SIZE * 0.22, dark ? 0.9 : 0.6);
+      }
+      ctx.globalAlpha = 1;
+
+      // Stop animating once the trail has faded and the head has caught up;
+      // the last frame stays on the canvas until the pointer moves again.
+      if (points.length || !settled) {
+        requestAnimationFrame(frame);
+      } else {
+        running = false;
+      }
+    }
+
+    function onMove(e) {
+      mouse = { x: e.clientX, y: e.clientY };
+      if (!head) head = { x: mouse.x, y: mouse.y };
+      start();
+    }
+
+    function onLeave() {
+      mouse = head = null;
+      start();
+    }
+
+    function init() {
+      canvas = document.createElement('canvas');
+      canvas.id = 'cursor-trail';
+      canvas.setAttribute('aria-hidden', 'true');
+      document.body.appendChild(canvas);
+      ctx = canvas.getContext('2d');
+      readColor();
+      resize();
+
+      window.addEventListener('resize', resize);
+      window.addEventListener('pointermove', onMove, { passive: true });
+      document.documentElement.addEventListener('mouseleave', onLeave);
+      // The theme toggle swaps the class on <html>; re-read the colour then.
+      new MutationObserver(function () { readColor(); start(); })
+        .observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
+</script>
