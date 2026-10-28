@@ -54,4 +54,40 @@
   .bio-text p {
     text-align: justify;
   }
+
+  /* ── Research areas (layouts/_partials/hbx/blocks/research-areas) ──────
+     Same width as the About Me text: that column is 8 of the bio block's
+     12 grid columns inside its 80rem container with 2rem gaps, i.e.
+     (80 - 11*2) / 12 * 8 + 7*2 = 52.67rem. Narrower screens just fill the
+     width available. */
+  .research-areas {
+    max-width: 52.67rem;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+  .research-lead {
+    max-width: 40rem;
+    margin: 0 auto 2.5rem;
+    text-align: center;
+    font-size: 1.125rem;
+    font-style: italic;
+  }
+  .research-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+  .research-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.15rem;
+  }
+  .research-body {
+    max-width: none;
+  }
+  .research-body p {
+    text-align: justify;
+  }
 </style>

@@ -52,47 +52,56 @@ sections:
         shape: circle # circle, square, rounded
 
   # ── 2. Research ──────────────────────────────────────────────────────────
-  - block: markdown
+  # A local block (layouts/_partials/hbx/blocks/research-areas): a lead
+  # line, then one card per area, stacked. Add, remove or reorder areas
+  # freely; `icon` takes any Hero icon name.
+  - block: research-areas
     id: research
     content:
       title: '📚 Research'
-      subtitle: ''
-      text: |-
-        Targeted protein degradation can reach proteins that conventional
-        inhibitors cannot, because it only has to *bind* a target, not
-        occupy a functional pocket. I build **bioPROTACs** — genetically
-        encoded degraders that fuse a target-binding domain to an E3
-        ligase — and ask what happens when they stop working.
-
-        My dissertation approaches that from two directions. One is a
-        dual-target bioPROTAC co-degrading ERα and PI3K p85α, which
-        re-sensitizes tamoxifen-resistant breast cancer cells to endocrine
-        therapy and acts synergistically with tamoxifen (CI < 0.4). The
-        other is a KRAS-targeting degrader built on a TRIM21–RBCC
-        scaffold, where I identified a mutation in the hypervariable
-        region that lets KRAS escape degradation. Because that platform
-        depends on multimerization, the escape is mechanistic rather than
-        incidental — I traced it with all-atom molecular dynamics of the
-        farnesylated, membrane-embedded protein, and confirmed it against
-        an orthogonal, multimerization-independent degrader.
-
-        Resistance is the thread running through both. A degrader that
-        works in a naive line and fails in a resistant one is telling you
-        something about the target's conformational behaviour, and I think
-        that signal is worth reading rather than engineering around.
-
-        This is pulling me toward **de novo binder design**. If the
-        limiting reagent for a bioPROTAC is a binding domain against a
-        hard target, then designing binders directly — rather than
-        borrowing them — is the way to widen what degradation can reach.
-        I have been building that capability independently: reproducing
-        the CLAIRE small-molecule binder-design pipeline end-to-end, and
-        testing whether published multistate-design diagnostics generalize
-        to the conformational states of KRAS. That intersection —
-        structure-based design meeting degrader mechanism — is where I
-        would like to do my postdoc.
-    design:
-      columns: '1'
+      text: >-
+        My work moves constantly between the bench and the computer, usually
+        because one keeps raising questions the other has to answer.
+      areas:
+        - label: Wet Lab
+          title: Targeted Protein Degradation & Drug Resistance
+          icon: beaker
+          text: |-
+            I design and test protein degraders, mostly **bioPROTACs** built
+            on E3 ligase scaffolds like TRIM21, and use cancer drug resistance
+            as a lens for understanding when and why they fail. My central
+            finding came from comparing a tamoxifen-resistant breast cancer
+            line (LCC2) to its drug-sensitive parent (MCF7): whole-genome
+            sequencing turned up **a mutation in the KRAS hypervariable
+            region**, a region with no previously known function, that nearly
+            abolished the activity of a TRIM21-based KRAS degrader
+            specifically in the resistant line. Beyond mechanism, I also build
+            degraders as therapeutic candidates directly, including a
+            tumor-specific bioPROTAC that **co-degrades ERα and PI3K p85α** to
+            resensitize resistant breast cancer cells to tamoxifen, and, in an
+            ongoing collaboration, a TRIM21-based bioPROTAC achieving
+            **dual-target degradation of oncogenic KRAS assemblies** in
+            pancreatic cancer.
+        - label: Dry Lab
+          title: Molecular Dynamics & Computational Protein Design
+          icon: cpu-chip
+          text: |-
+            The wet-lab puzzles above are usually what send me back to the
+            computer. To explain why the KRAS mutation broke degrader
+            activity, I ran **182-ns all-atom molecular dynamics simulations**
+            (AMBER, with explicit GppNHp and Mg²⁺) and showed that the
+            mutation changes how KRAS clusters at the membrane, which the
+            degrader's activity turns out to depend on; swapping in a degrader
+            architecture that doesn't rely on clustering restored activity,
+            confirming the mechanism computationally and experimentally at
+            once. Separately, I taught myself a full **de novo protein design
+            pipeline**, Rosetta Match for scaffold matching, ProteinMPNN for
+            sequence design, and AlphaFold2 for structural validation, and
+            used it to design new binders for small-molecule targets from
+            scratch, open-sourcing the pipeline on GitHub. I see this
+            computational side less as a separate skill set and more as the
+            other half of the same question: once you know why a degrader
+            fails, you can start predicting it.
 
   # ── 3. Selected publications ─────────────────────────────────────────────
   # Shows only papers with `featured: true` in their front matter.
