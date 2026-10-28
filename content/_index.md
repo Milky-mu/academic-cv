@@ -15,7 +15,7 @@ type: landing
 sections:
   # ── 1. Bio ───────────────────────────────────────────────────────────────
   # Two columns: photo, name, role, affiliation and social icons on the left;
-  # "Professional Summary", CV button and the Education cards on the right.
+  # "About Me", CV button and the Education cards on the right.
   # All of it comes from `data/authors/me.yaml`. Swap the photo by replacing
   # `assets/media/authors/me.png` with your own (square, 640x640 or larger).
   - block: resume-biography-3
@@ -33,7 +33,7 @@ sections:
       #   url: uploads/Ouyang-Muzi-CV.pdf
       # Leave blank for the defaults ("Professional Summary", "Education").
       headings:
-        about: ''
+        about: 'About Me'
         education: ''
         interests: ''
     design:
