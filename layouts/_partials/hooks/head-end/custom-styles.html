@@ -37,7 +37,12 @@
   }
 
   /* ── About Me text ─────────────────────────────────────────────────────
-     Justified so both edges of each paragraph line up. */
+     Justified so both edges of each paragraph line up. The `prose` wrapper
+     caps lines at 65ch, which left the text narrower than the Education
+     cards below; lifting the cap makes both span the same column. */
+  .prose:has(> .bio-text) {
+    max-width: none;
+  }
   .bio-text p {
     text-align: justify;
   }

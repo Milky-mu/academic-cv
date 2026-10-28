@@ -43,36 +43,36 @@ affiliations:
 # 2-4 sentences. On the job market, say what you work on AND that you're
 # looking — search committees and prospective PIs read this first.
 bio: |
-  I am Muzi Ouyang (欧阳木子) — I go by Mia. I am a PhD candidate in
+  I am Muzi Ouyang (欧阳木子) — I go by **Mia**. I am a PhD candidate in
   Chemistry at Tsinghua University, advised by
   [Prof. Ying Tan (谭英)](https://www.sigs.tsinghua.edu.cn/ty_en/main.psp)
   at the Institute of Biopharmaceutical and Health Engineering (iBHE) in
   Shenzhen, where I spend most of my time thinking about why protein
   degraders sometimes stop working, and what that failure can teach us.
 
-  My research sits at the intersection of targeted protein degradation,
-  cancer drug resistance, and molecular dynamics. It started with an
+  My research sits at the intersection of **targeted protein degradation,
+  cancer drug resistance, and molecular dynamics**. It started with an
   observation that didn't make sense: a KRAS-targeting bioPROTAC I had
   engineered worked beautifully in one breast cancer cell line, and almost
   completely failed in its drug-resistant counterpart. Chasing that
   discrepancy led me to a mutation in a part of KRAS nobody had looked at
   closely before, and eventually, through all-atom MD simulations and a
-  carefully designed control experiment, to a mechanism: the degrader's
+  carefully designed control experiment, to a mechanism: **the degrader's
   activity depended on how the target protein clusters itself at the
-  membrane, not just on how tightly it binds. That turned a puzzling
-  failure into a diagnostic principle I now use to think about degrader
+  membrane, not just on how tightly it binds.** That turned a puzzling
+  failure into a **diagnostic principle** I now use to think about degrader
   design more generally.
 
   From there, my work branched in two directions I care about equally.
   One is building degraders as actual therapeutic strategies, like a
-  dual-target bioPROTAC that reverses tamoxifen resistance in breast
+  **dual-target bioPROTAC that reverses tamoxifen resistance** in breast
   cancer by co-degrading two proteins at once. The other is
-  computational: I taught myself to run a full de novo protein design
-  pipeline (Rosetta, ProteinMPNN, AlphaFold2) from scratch and used it to
+  computational: I taught myself to run a full **de novo protein design
+  pipeline** (Rosetta, ProteinMPNN, AlphaFold2) from scratch and used it to
   design new binders for small-molecule targets, which I've open-sourced
   on GitHub for anyone who wants to build on it.
 
-  What I'm looking for next is a postdoc where I can keep working at this
+  What I'm looking for next is **a postdoc** where I can keep working at this
   intersection, bringing mechanistic, structure-aware thinking to new
   degradation chemistries and new disease contexts.
 
