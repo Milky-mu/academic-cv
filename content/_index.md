@@ -52,10 +52,10 @@ sections:
         shape: circle # circle, square, rounded
 
   # ── 2. Research ──────────────────────────────────────────────────────────
-  # A local block (layouts/_partials/hbx/blocks/research-areas): a lead
+  # A local block (layouts/_partials/hbx/blocks/research-labs): a lead
   # line, then one card per area, stacked. Add, remove or reorder areas
   # freely; `icon` takes any Hero icon name.
-  - block: research-areas
+  - block: research-labs
     id: research
     content:
       title: '📚 Research'
