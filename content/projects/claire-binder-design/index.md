@@ -98,7 +98,7 @@ to the Ras superfamily:
 
 The first two layers are what make the third worth believing. This also meant
 rebuilding the simulation system in AMBER after diagnosing that a prior model was
-nucleotide-free — the replacement is GppNHp- and Mg²⁺-bound, with de novo
+nucleotide-free — the replacement is GppNHp- and Mg^2+^-bound, with de novo
 parameterization for the ligand and the farnesylated cysteine anchor.
 
 ## Toolchain
