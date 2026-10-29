@@ -98,7 +98,10 @@
       }
 
       // Hold the list at its tallest page's height.
+      // Measuring shows each page in turn, and show() moves `current`, so
+      // remember the page the visitor was on and go back to it afterwards.
       function fixHeight() {
+        var keep = current;
         list.style.minHeight = '';
         var tallest = 0;
         for (var p = 0; p < pages; p++) {
@@ -106,7 +109,7 @@
           tallest = Math.max(tallest, list.offsetHeight);
         }
         list.style.minHeight = tallest + 'px';
-        show(current, false);
+        show(keep, false);
       }
 
       prev.addEventListener('click', function () { if (current > 0) show(current - 1, true); });
