@@ -1,0 +1,131 @@
+{{/* Left/right arrows that page through the homepage's All Publications
+     list, instead of the theme's "See all publications" link.
+     The block renders every paper (count: 0 in content/_index.md); this
+     script shows PAGE_SIZE at a time and adds ‹ 1 / 2 › controls under the
+     list. The list keeps the height of its tallest page, so the arrows
+     don't jump when the last, shorter page is shown. Without JavaScript the
+     full list simply shows. */}}
+<style>
+  .pub-pager {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+  }
+  .pub-pager button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 9999px;
+    border: 1px solid rgb(var(--hb-primary-500-rgb) / 0.35);
+    background: rgb(255 255 255 / 0.7);
+    color: rgb(var(--hb-primary-600-rgb));
+    transition: background-color 0.2s, color 0.2s, opacity 0.2s, transform 0.2s;
+  }
+  .pub-pager button:hover:not(:disabled) {
+    background: rgb(var(--hb-primary-600-rgb));
+    color: #fff;
+    transform: scale(1.06);
+  }
+  .pub-pager button:disabled {
+    opacity: 0.3;
+  }
+  :where(.dark) .pub-pager button {
+    background: rgb(31 41 55 / 0.7);
+    color: rgb(var(--hb-primary-300-rgb));
+  }
+  .pub-pager-status {
+    min-width: 3.5rem;
+    text-align: center;
+    font-size: 0.95rem;
+    font-variant-numeric: tabular-nums;
+    opacity: 0.75;
+  }
+  .pub-list-item.pub-hidden {
+    display: none !important;
+  }
+  .pub-page-in {
+    animation: pub-fade 0.35s ease;
+  }
+  @keyframes pub-fade {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: none; }
+  }
+</style>
+<script>
+  (function () {
+    var PAGE_SIZE = 5;
+
+    function init() {
+      var items = Array.prototype.slice.call(
+        document.querySelectorAll('#publications .pub-list-item'));
+      if (items.length <= PAGE_SIZE) return;
+      var list = items[0].parentNode;
+      var pages = Math.ceil(items.length / PAGE_SIZE);
+      var current = 0;
+
+      var nav = document.createElement('nav');
+      nav.className = 'pub-pager';
+      nav.setAttribute('aria-label', 'Publication pages');
+      var arrow = function (d) {
+        return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"' +
+          ' stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="' + d + '"/></svg>';
+      };
+      nav.innerHTML =
+        '<button type="button" aria-label="Previous page">' + arrow('M15 18l-6-6 6-6') + '</button>' +
+        '<span class="pub-pager-status" aria-live="polite"></span>' +
+        '<button type="button" aria-label="Next page">' + arrow('M9 18l6-6-6-6') + '</button>';
+      list.parentNode.insertBefore(nav, list.nextSibling);
+      var prev = nav.children[0], status = nav.children[1], next = nav.children[2];
+
+      function show(p, animate) {
+        current = p;
+        items.forEach(function (el, i) {
+          var on = Math.floor(i / PAGE_SIZE) === p;
+          el.classList.toggle('pub-hidden', !on);
+          el.classList.remove('pub-page-in');
+          if (on && animate) {
+            void el.offsetWidth;  // restart the animation
+            el.classList.add('pub-page-in');
+          }
+        });
+        status.textContent = (p + 1) + ' / ' + pages;
+        prev.disabled = p === 0;
+        next.disabled = p === pages - 1;
+      }
+
+      // Hold the list at its tallest page's height.
+      function fixHeight() {
+        list.style.minHeight = '';
+        var tallest = 0;
+        for (var p = 0; p < pages; p++) {
+          show(p, false);
+          tallest = Math.max(tallest, list.offsetHeight);
+        }
+        list.style.minHeight = tallest + 'px';
+        show(current, false);
+      }
+
+      prev.addEventListener('click', function () { if (current > 0) show(current - 1, true); });
+      next.addEventListener('click', function () { if (current < pages - 1) show(current + 1, true); });
+
+      fixHeight();
+      var t;
+      window.addEventListener('resize', function () {
+        clearTimeout(t);
+        t = setTimeout(fixHeight, 150);
+      });
+      // Web fonts can change line wrapping after first paint.
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(fixHeight);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
+</script>

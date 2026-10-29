@@ -118,11 +118,17 @@ sections:
       columns: 2
 
   # ── 4. All publications, as formatted citations ──────────────────────────
+  # Every paper is rendered (count: 0 = no limit) and the "See all" link is
+  # off; layouts/_partials/hooks/head-end/pub-pager.html then splits the list
+  # into pages with left/right arrows.
   - block: collection
     id: publications
     content:
       title: All Publications
       text: ''
+      count: 0
+      archive:
+        enable: false
       filters:
         folders:
           - publications
