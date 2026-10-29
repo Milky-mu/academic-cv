@@ -7,6 +7,12 @@
      from the theme's primary colour, so it follows theme.colors.primary.
      Skipped on touch screens and for visitors who ask for reduced motion.
 
+     Where it runs, the system pointer is hidden and the glow stands in for
+     it. The halo trails slightly behind the pointer, so a small solid dot
+     is drawn at the exact pointer position as the actual "hotspot" — that
+     is what visitors aim with. Where the effect is skipped, the normal
+     pointer stays, since the class that hides it is only added here.
+
      Why it looks smooth: the trail is not drawn through the raw mouse
      positions, which arrive unevenly and would give a jagged polyline.
      Instead a "head" eases towards the pointer every animation frame and the
@@ -22,6 +28,10 @@
     height: 100vh;
     pointer-events: none;
     z-index: 9999;
+  }
+  html.glow-cursor,
+  html.glow-cursor * {
+    cursor: none !important;
   }
 </style>
 <script>
@@ -40,10 +50,10 @@
     var DNA_HEIGHT = 36;   // height of the loading helix beside the pointer, in px
     var DNA_RADIUS = 8;    // half its width, in px
     var DNA_SPEED = 0.8;   // turns per second
+    var DOT_RADIUS = 3.5;  // the solid dot marking the exact pointer, in px
 
     var canvas, ctx, sprite, color, color2;
     var pageLoading = document.readyState !== 'complete';
-    var busyCursor = false;  // pointer is over something showing a wait cursor
     var dnaAlpha = 0;        // fades the helix in and out
     var points = [];       // recent head positions, oldest first
     var bursts = [];       // click effects still playing, oldest first
@@ -221,11 +231,24 @@
       }
       // Loading helix: sits just below-right of the pointer, like the
       // spinner beside a system busy cursor, and fades in and out.
-      var loading = pageLoading || busyCursor;
+      var loading = pageLoading;
       dnaAlpha += ((loading ? 1 : 0) - dnaAlpha) * Math.min(1, dt / 120);
+      ctx.globalCompositeOperation = 'source-over';
       if (head && dnaAlpha > 0.01) {
-        ctx.globalCompositeOperation = 'source-over';
         drawDNA(head.x + 24, head.y + 10, dnaAlpha, now);
+      }
+
+      // The hotspot: a crisp dot exactly under the (hidden) system pointer,
+      // with a thin light rim so it shows on any background.
+      if (mouse) {
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = 'rgb(' + color + ')';
+        ctx.strokeStyle = dark ? 'rgb(255 255 255 / 0.6)' : 'rgb(255 255 255 / 0.9)';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.arc(mouse.x, mouse.y, DOT_RADIUS, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
       }
       ctx.globalAlpha = 1;
 
@@ -277,9 +300,12 @@
       window.addEventListener('pointermove', onMove, { passive: true });
       window.addEventListener('pointerdown', onDown, { passive: true });
 
-      // "Loading" means: the page is still loading, the visitor has just
-      // left for another page and it hasn't appeared yet, or the pointer is
-      // over something that shows a wait cursor.
+      document.documentElement.classList.add('glow-cursor');
+
+      // "Loading" means: the page is still loading, or the visitor has just
+      // left for another page and it hasn't appeared yet. (Wait cursors on
+      // individual elements can't be detected any more, since every
+      // element's cursor is now forced to none.)
       window.addEventListener('load', function () { pageLoading = false; });
       window.addEventListener('beforeunload', function () {
         pageLoading = true;
@@ -289,11 +315,6 @@
         setTimeout(function () { pageLoading = false; }, 5000);
       });
       window.addEventListener('pageshow', function () { pageLoading = false; });
-      document.addEventListener('pointerover', function (e) {
-        var c = getComputedStyle(e.target).cursor;
-        busyCursor = c === 'wait' || c === 'progress';
-        if (busyCursor) start();
-      }, { passive: true });
       document.documentElement.addEventListener('mouseleave', onLeave);
       // The theme toggle swaps the class on <html>; re-read the colour then.
       new MutationObserver(function () { readColor(); start(); })
