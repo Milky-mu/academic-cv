@@ -183,17 +183,15 @@
           {{ end }}
         {{ end }}
 
+        {{/* LOCAL OVERRIDE: upstream shows the avatar as a large circle
+             overlapping the banner. Here it is a small badge inside the name
+             heading, right after the annotated (pinyin) words — see $avatar_html
+             below. The status emoji is dropped: it doesn't fit a badge this
+             small. Decorative alt, since the heading already says the name. */}}
+        {{ $avatar_html := "" }}
         {{ if $avatar }}
-        <div class="avatar-wrapper {{ if $img }}-mt-24{{else}}mb-4{{end}}" style="width: {{$display_size}}px; height: {{$display_size}}px;">
-          {{ $avatar_image := $avatar.Fill (printf "%sx%s Center" $generation_size $generation_size) }}
-          <img class="avatar {{$shape_class}} border-4 border-white shadow-2xl" 
-               src="{{ $avatar_image.RelPermalink }}" 
-               alt="{{$profile.title}}"
-               width="{{$display_size}}" 
-               height="{{$display_size}}"
-               style="width: {{$display_size}}px; height: {{$display_size}}px; object-fit: cover;">
-          {{ with $status_icon }}<span class="avatar-emoji">{{ . | emojify }}</span>{{ end }}
-        </div>
+          {{ $avatar_image := $avatar.Fill "160x160 Center" }}
+          {{ $avatar_html = printf `<img class="name-avatar %s" src="%s" alt="" width="80" height="80">` $shape_class $avatar_image.RelPermalink | safeHTML }}
         {{ end }}
 
         {{/* Name and Role - Centered */}}
@@ -221,20 +219,29 @@
                    the end of the reading get an empty <rt> and simply carry no
                    annotation. With one word and one reading this renders
                    exactly what upstream did.
+
+                   Words past the end of the reading ("(Mia)") go on their own
+                   line, after the avatar badge, so the first line always reads
+                   "Muzi Ouyang [avatar]".
               */}}
               {{- $name_words := split $profile.title " " -}}
               {{- $pron_words := split $name_pronunciation " " -}}
+              {{- $n := len $pron_words -}}
               <ruby class="hb-ruby-name">
-                {{- range $i, $word := $name_words -}}
+                {{- range $i, $word := first $n $name_words -}}
                   {{- if $i }} {{ end -}}
                   {{- $word -}}
-                  <rt>{{- if lt $i (len $pron_words) }}{{ index $pron_words $i }}{{ end -}}</rt>
+                  <rt>{{ index $pron_words $i }}</rt>
                 {{- end -}}
               </ruby>
+              {{- $avatar_html -}}
+              {{- with after $n $name_words }}
+              <span class="block">{{ delimit . " " }}</span>
+              {{- end }}
             </h1>
           {{ else }}
             <h1 class="{{ $name_class }} font-black text-gray-900 dark:text-white leading-tight">
-              {{ $profile.title }}
+              {{ $profile.title }}{{ $avatar_html }}
             </h1>
           {{ end }}
           

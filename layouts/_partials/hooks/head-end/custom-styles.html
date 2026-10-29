@@ -44,6 +44,19 @@
     height: 3.25rem;
   }
 
+  /* ── Avatar badge beside the name ──────────────────────────────────────
+     Sized in em so it scales with the heading at every breakpoint. */
+  .name-avatar {
+    display: inline-block;
+    width: 1.15em;
+    height: 1.15em;
+    margin-left: 0.25em;
+    vertical-align: middle;
+    object-fit: cover;
+    border: 3px solid #fff;
+    box-shadow: 0 6px 16px rgb(0 0 0 / 0.18);
+  }
+
   /* ── About Me text ─────────────────────────────────────────────────────
      Justified so both edges of each paragraph line up. The `prose` wrapper
      caps lines at 65ch, which left the text narrower than the Education
