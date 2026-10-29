@@ -44,7 +44,7 @@ sections:
       spacing:
         padding: ['0', '0', '0', '0']
       banner:
-        filename: kalen-emsley-Bkci_8qcdvQ-unsplash.jpg
+        filename: sysu-graduation.jpg
       name:
         size: md # xs, sm, md, lg, xl
       avatar:
